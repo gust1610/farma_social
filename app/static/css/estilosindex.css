@@ -1,0 +1,243 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	background-image: url(/images/fondo.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+.itemmenu {
+	float: left;
+	margin-left: 20px;
+	font-size: 20px;
+	color: white;
+}
+
+.twitter-typeahead {
+	background: transparent;
+}
+
+#Dautocompletar {
+	background: transparent;
+}
+
+.topmenu {
+	float: right;
+	margin: 20px 30px;
+}
+
+.buscador {
+	float: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -270px;
+	margin-top: -100px;
+	width: 100%;
+	max-width: 540px;
+}
+
+#barbusqueda {
+	position: relative;
+}
+
+#contendorfondo img {
+	width: 100%;
+	max-width: 520px;
+	z-index: -1;
+}
+
+#entrada {
+	position: absolute;
+	background: transparent;
+	border: none;
+	top: 22px;
+	left: 5px;
+	font-size: 26px;
+	color: white;
+	padding: 10px 10px;
+	width: 430px;
+}
+
+#tipodatosbusqueda {
+	margin-top: 5px;
+	font-size: 15px;
+	color: white;
+	max-width: 519px;
+	text-align: center;
+}
+
+textarea:focus,input:focus {
+	outline: 0;
+}
+
+.footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+}
+
+#slogan {
+	font-size: 20px;
+	text-align: center;
+	color: white;
+}
+
+.logofarma {
+	margin-left: 108px;
+	margin-bottom: 20px;
+}
+
+.logofarma img {
+	width: 100%;
+	max-width: 309px;
+}
+
+.itemredes {
+	float: left;
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+
+#separador {
+	width: 100%;
+	max-width: 250px;
+	border-bottom: 1px solid #fff;
+	margin: 10px auto;
+}
+
+.redessociales {
+	width: 100%;
+	max-width: 113px;
+	margin: 0 auto 10px;
+}
+
+.itemredes:first-child {
+	margin-left: 0;
+}
+
+.twitter-typehead {
+	position: absolute;
+	display: block;
+	top: 0px;
+}
+
+.tt-hint {
+	display: none;
+}
+
+#medicam {
+	width: 430px;
+	padding: 20px;
+	font-size: 20px;
+	border: none;
+	background: transparent;
+	color: white;
+}
+
+.posbuscador {
+	position: absolute;
+	top: 17px;
+	background: transparent;
+	left: 0px;
+}
+
+.tt-dropdown-menu {
+	position: absolute;
+	top: 80px;
+	left: 0px;
+	z-index: 100;
+	display: none;
+	right: auto;
+	padding: 10px 20px;
+	color: #666;
+	border: 3px solid white;
+	background: white;;
+	width: 474px;
+}
+
+.tt-dataset-medicamentos,.tt-suggestions,.tt-suggestion {
+	background: white;
+}
+
+::-webkit-input-placeholder {
+	color: white;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+	color: white;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+	color: white;
+}
+
+:-ms-input-placeholder {
+	color: white;
+}
+
+@media ( max-width : 570px) {
+	.buscador {
+		position: relative;
+		float: left;
+		width: 100%;
+		margin: 0;
+		top: 0;
+		left: 0;
+		margin-top: 200px;
+	}
+	#actresponsive {
+		width: 100%;
+		max-width: 300px;
+		margin: 0 auto;
+		padding: 20px;
+	}
+	.logofarma {
+		margin: 0;
+		margin-bottom: 20px;
+	}
+	.topmenu {
+		margin: 0;
+		margin-top: 20px;
+	}
+	#entrada {
+		position: absolute;
+		background: transparent;
+		border: none;
+		top: 0;
+		font-size: 18px;
+		color: white;
+		padding: 18px 5px;
+	}
+	.tt-dropdown-menu {
+		border: 2px solid white;
+		top: 46px;
+		width: 256px;
+	}
+	#medicam {
+		width: 245px;
+		padding: 5px 12px;
+		border: none;
+		font-size: 16px;
+	}
+	.footer {
+		position: relative;
+		float: left;
+		margin-top: 150px;
+		width: 100%;
+		bottom: 0;
+		margin-bottom: 20px;
+	}
+}
+
+#loading {
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	top: 85px;
+}

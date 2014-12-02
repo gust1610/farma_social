@@ -1,0 +1,33 @@
+<!doctype html>
+	<head>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+		
+		function httpGet() {
+			$.ajax({
+			    url: '/main/change_money',
+			    type: 'POST',
+			    data: ("&money=" + "USD"),
+			    success: function(res) {
+			    	alert('OK');
+			    	alert(res);
+			    }
+			});
+		}
+		
+	</script>
+	
+	</head>
+	
+	<body>
+		https://www.google.com/finance/converter?a=100&from=COP&to=USD
+		<button id="button" onClick="httpGet()">Mi Boton</button>
+		
+		<div id="here">
+		
+		</div>
+		
+	</body>
+	
+</html>

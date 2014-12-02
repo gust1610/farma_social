@@ -1,0 +1,703 @@
+<!doctype html>
+<head>
+	
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<link href="/css/horizBarChart.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="/js/jquery.horizBarChart.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.typeahead.js"></script>
+	
+	<script type="text/javascript">
+		var myCountry = '';
+		var codeCountry = 'COP';
+		var tasaBase = 1.0;
+		  	
+		$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) { 
+			d = data.address.country;
+			d = d.toUpperCase()
+			c = data.address.country_code;
+			if(c == 'CO') {
+				c = 'COP';
+			}
+			getMyCountry(d,c);
+		});
+		  
+		function getMyCountry(data, code){
+			this.myCountry = data;
+			this.codeCountry = code;
+		  	main();
+		}
+		
+		function setTasaBase(n) {
+			this.tasaBase = n;
+		}
+		
+		function cleanDiv(name) {
+			var e = document.getElementById(name);
+			e.innerHTML = "";
+		}
+		
+		function changeCountry(){
+			var listSelect = document.getElementById('countries').value;
+			if(listSelect != 'Seleccione un Pais') {
+				cleanDiv("pre");
+				myCountry = listSelect;
+				main();
+			}			
+		}
+		
+		function changeMoney() {
+			var listSelect = document.getElementById('money').value;
+			this.codeCountry = listSelect;
+			if(listSelect == 'COP') {
+				setTasaBase(1);
+				cleanDiv("pre");
+		    	main();
+			}
+			else if(listSelect != 'Seleccione la Moneda') {
+				$.ajax({
+				    url: '/mayorista/change_money',
+				    type: 'POST',
+				    data: ("&money=" + listSelect),
+				    success: function(res) {
+				    	setTasaBase( parseFloat(res.split(" ")[0]) );
+				    	cleanDiv("pre");
+				    	main();
+				    }
+				});
+			}
+		}
+	</script>
+
+	<style type="text/css">
+	.modalDialog {
+		position: fixed;
+		font-family: Arial, Helvetica, sans-serif;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.8);
+		z-index: 99999;
+		opacity: 0;
+		-webkit-transition: opacity 400ms ease-in;
+		-moz-transition: opacity 400ms ease-in;
+		transition: opacity 400ms ease-in;
+		pointer-events: none;
+	}
+	
+	.modalDialog:target {
+		opacity: 1;
+		pointer-events: auto;
+	}
+	
+	.modalDialog>div {
+		width: 400px;
+		position: relative;
+		margin: 10% auto;
+		padding: 5px 20px 13px 20px;
+		border-radius: 10px;
+		background: #fff;
+		background: -moz-linear-gradient(#fff, #999);
+		background: -webkit-linear-gradient(#fff, #999);
+		background: -o-linear-gradient(#fff, #999);
+	}
+	
+	/* 'star-rating' component */
+	.starRate {
+		position: relative;
+		margin: 20px;
+		overflow: hidden;
+		zoom: 1;
+	}	
+	.starRate ul {
+		width: 160px;
+		margin: 0;
+		padding: 0;
+	}	
+	.starRate li {
+		display: inline;
+		list-style: none;
+	}	
+	.starRate a,.starRate b {
+		background: url(/img/star_rate.gif) left top repeat-x;
+	}	
+	.starRate a {
+		float: right;
+		margin: 0 80px 0 -144px;
+		width: 80px;
+		height: 16px;
+		background-position: left 16px;
+		color: #000;
+		text-decoration: none;
+	}	
+	.starRate a:hover {
+		background-position: left -32px;
+	}	
+	.starRate b {
+		position: absolute;
+		z-index: -1;
+		width: 80px;
+		height: 16px;
+		background-position: left -16px;
+	}	
+	.starRate div b {
+		left: 0px;
+		bottom: 0px;
+		background-position: left top;
+	}	
+	.starRate a span {
+		position: absolute;
+		left: -300px;
+	}	
+	.starRate a:hover span {
+		left: 90px;
+		width: 100%;
+	}
+</style>
+
+</head>
+
+<body>
+	{% if ferris.format_value(this.user) != "None" %}
+    	Welcome {{ferris.format_value(this.user.full_name)}} - {{ferris.format_value(this.user.email)}}
+    {% endif %}
+    
+    <div id="barbusqueda">
+        <div id="contendorfondo">
+        	<a href="#" style="text-decoration:none" onclick="getUrl()"><img src="/images/Estrella color.png"/></a>
+        </div>
+        <div class="posbuscador">
+            <!-- <input id="entrada" type="text" value="BUSCA EL MEDICAMENTO"/> -->                	
+        	<input id="medicam" class="medicam" type="text" placeholder="BUSCA EL MEDICAMENTO" required />
+    	</div>
+	</div>
+		
+	<h2 id="med1"></h2>
+	<h4 id="med2"></h4>
+	<h4 id="med3"></h4>
+
+	
+<div id="openModal" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close" onclick="reFresh()">X</a>
+		<object type="text/html" data="/login" width="400" height="400"> </object>
+	</div>
+</div>
+
+	
+	{% if ferris.format_value(this.user) == "None" %}
+		<a href="#openModal">
+			<input type="submit"  value="Favoritear - Login" />
+		</a>
+		
+		<div class="starRate">
+			<div><b></b></div>
+			<ul>
+				{% if medication.calification_average == 5 %}
+					<li><a href="#openModal"><span>Calificar con 5 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#openModal"><span>Calificar con 5 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 4 %}
+					<li><a href="#openModal"><span>Calificar con 4 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#openModal"><span>Calificar con 4 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 3 %}
+					<li><a href="#openModal"><span>Calificar con 3 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#openModal"><span>Calificar con 3 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 2 %}
+					<li><a href="#openModal"><span>Calificar con 2 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#openModal"><span>Calificar con 2 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 1 %}
+					<li><a href="#openModal"><span>Calificar con 1 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#openModal"><span>Calificar con 1 estrellas</span></a></li>
+				{% endif %}
+			</ul>
+		</div>
+		
+	{% else %}
+		<a onclick="sendPOST()">
+			<input type="submit" value="Favoritear" />
+		</a>
+		<a href="/logout">
+			<input type="submit" value="Logout" />
+		</a>
+		<a href="/mayorista/view_favorites">
+			<input type="submit" value="Mis Favoritos" />
+		</a>
+		
+		<div class="starRate">
+			<div><b></b></div>
+			<ul>
+				{% if medication.calification_average == 5 %}
+					<li><a href="#" onclick="sendCalification(5)"><span>Calificar con 5 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#" onclick="sendCalification(5)"><span>Calificar con 5 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 4 %}
+					<li><a href="#" onclick="sendCalification(4)"><span>Calificar con 4 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#" onclick="sendCalification(4)"><span>Calificar con 4 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 3 %}
+					<li><a href="#" onclick="sendCalification(3)"><span>Calificar con 3 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#" onclick="sendCalification(3)"><span>Calificar con 3 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 2 %}
+					<li><a href="#" onclick="sendCalification(2)"><span>Calificar con 2 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#" onclick="sendCalification(2)"><span>Calificar con 2 estrellas</span></a></li>
+				{% endif %}			
+				{% if medication.calification_average == 1 %}
+					<li><a href="#" onclick="sendCalification(1)"><span>Calificar con 1 estrellas</span><b></b></a></li>
+				{% else %}
+					<li><a href="#" onclick="sendCalification(1)"><span>Calificar con 1 estrellas</span></a></li>
+				{% endif %}
+			</ul>
+		</div>
+	{% endif %}
+	
+	Calificación Total: {% if medication.calification_value  %}
+							{{medication.calification_value}} Puntos.
+						{% else %}
+							0 Puntos.
+						{% endif %}
+		<br><br><br><br>
+		
+		
+	<label>Moneda</label>
+	<select id="money" onchange="changeMoney()">
+		<option value="Seleccione la Moneda" selected="">Seleccione la Moneda</option>
+		<option value="AED">United Arab Emirates Dirham (AED)</option>
+		<option value="AFN">Afghan Afghani (AFN)</option>
+		<option value="ALL">Albanian Lek (ALL)</option>
+		<option value="AMD">Armenian Dram (AMD)</option>
+		<option value="ANG">Netherlands Antillean Guilder (ANG)</option>
+		<option value="AOA">Angolan Kwanza (AOA)</option>
+		<option value="ARS">Argentine Peso (ARS)</option>
+		<option value="AUD">Australian Dollar (A$)</option>
+		<option value="AWG">Aruban Florin (AWG)</option>
+		<option value="AZN">Azerbaijani Manat (AZN)</option>
+		<option value="BAM">Bosnia-Herzegovina Convertible Mark (BAM)</option>
+		<option value="BBD">Barbadian Dollar (BBD)</option>
+		<option value="BDT">Bangladeshi Taka (BDT)</option>
+		<option value="BGN">Bulgarian Lev (BGN)</option>
+		<option value="BHD">Bahraini Dinar (BHD)</option>
+		<option value="BIF">Burundian Franc (BIF)</option>
+		<option value="BMD">Bermudan Dollar (BMD)</option>
+		<option value="BND">Brunei Dollar (BND)</option>
+		<option value="BOB">Bolivian Boliviano (BOB)</option>
+		<option value="BRL">Brazilian Real (R$)</option>
+		<option value="BSD">Bahamian Dollar (BSD)</option>
+		<option value="BTC">Bitcoin (฿)</option>
+		<option value="BTN">Bhutanese Ngultrum (BTN)</option>
+		<option value="BWP">Botswanan Pula (BWP)</option>
+		<option value="BYR">Belarusian Ruble (BYR)</option>
+		<option value="BZD">Belize Dollar (BZD)</option>
+		<option value="CAD">Canadian Dollar (CA$)</option>
+		<option value="CDF">Congolese Franc (CDF)</option>
+		<option value="CHF">Swiss Franc (CHF)</option>
+		<option value="CLF">Chilean Unit of Account (UF) (CLF)</option>
+		<option value="CLP">Chilean Peso (CLP)</option>
+		<option value="CNH">CNH (CNH)</option>
+		<option value="CNY">Chinese Yuan (CN¥)</option>
+		<option value="COP">Colombian Peso (COP)</option>
+		<option value="CRC">Costa Rican Colón (CRC)</option>
+		<option value="CUP">Cuban Peso (CUP)</option>
+		<option value="CVE">Cape Verdean Escudo (CVE)</option>
+		<option value="CZK">Czech Republic Koruna (CZK)</option>
+		<option value="DEM">German Mark (DEM)</option>
+		<option value="DJF">Djiboutian Franc (DJF)</option>
+		<option value="DKK">Danish Krone (DKK)</option>
+		<option value="DOP">Dominican Peso (DOP)</option>
+		<option value="DZD">Algerian Dinar (DZD)</option>
+		<option value="EGP">Egyptian Pound (EGP)</option>
+		<option value="ERN">Eritrean Nakfa (ERN)</option>
+		<option value="ETB">Ethiopian Birr (ETB)</option>
+		<option value="EUR">Euro (€)</option>
+		<option value="FIM">Finnish Markka (FIM)</option>
+		<option value="FJD">Fijian Dollar (FJD)</option>
+		<option value="FKP">Falkland Islands Pound (FKP)</option>
+		<option value="FRF">French Franc (FRF)</option>
+		<option value="GBP">British Pound Sterling (£)</option>
+		<option value="GEL">Georgian Lari (GEL)</option>
+		<option value="GHS">Ghanaian Cedi (GHS)</option>
+		<option value="GIP">Gibraltar Pound (GIP)</option>
+		<option value="GMD">Gambian Dalasi (GMD)</option>
+		<option value="GNF">Guinean Franc (GNF)</option>
+		<option value="GTQ">Guatemalan Quetzal (GTQ)</option>
+		<option value="GYD">Guyanaese Dollar (GYD)</option>
+		<option value="HKD">Hong Kong Dollar (HK$)</option>
+		<option value="HNL">Honduran Lempira (HNL)</option>
+		<option value="HRK">Croatian Kuna (HRK)</option>
+		<option value="HTG">Haitian Gourde (HTG)</option>
+		<option value="HUF">Hungarian Forint (HUF)</option>
+		<option value="IDR">Indonesian Rupiah (IDR)</option>
+		<option value="IEP">Irish Pound (IEP)</option>
+		<option value="ILS">Israeli New Sheqel (₪)</option>
+		<option value="INR">Indian Rupee (Rs.)</option>
+		<option value="IQD">Iraqi Dinar (IQD)</option>
+		<option value="IRR">Iranian Rial (IRR)</option>
+		<option value="ISK">Icelandic Króna (ISK)</option>
+		<option value="ITL">Italian Lira (ITL)</option>
+		<option value="JMD">Jamaican Dollar (JMD)</option>
+		<option value="JOD">Jordanian Dinar (JOD)</option>
+		<option value="JPY">Japanese Yen (¥)</option>
+		<option value="KES">Kenyan Shilling (KES)</option>
+		<option value="KGS">Kyrgystani Som (KGS)</option>
+		<option value="KHR">Cambodian Riel (KHR)</option>
+		<option value="KMF">Comorian Franc (KMF)</option>
+		<option value="KPW">North Korean Won (KPW)</option>
+		<option value="KRW">South Korean Won (₩)</option>
+		<option value="KWD">Kuwaiti Dinar (KWD)</option>
+		<option value="KYD">Cayman Islands Dollar (KYD)</option>
+		<option value="KZT">Kazakhstani Tenge (KZT)</option>
+		<option value="LAK">Laotian Kip (LAK)</option>
+		<option value="LBP">Lebanese Pound (LBP)</option>
+		<option value="LKR">Sri Lankan Rupee (LKR)</option>
+		<option value="LRD">Liberian Dollar (LRD)</option>
+		<option value="LSL">Lesotho Loti (LSL)</option>
+		<option value="LTL">Lithuanian Litas (LTL)</option>
+		<option value="LVL">Latvian Lats (LVL)</option>
+		<option value="LYD">Libyan Dinar (LYD)</option>
+		<option value="MAD">Moroccan Dirham (MAD)</option>
+		<option value="MDL">Moldovan Leu (MDL)</option>
+		<option value="MGA">Malagasy Ariary (MGA)</option>
+		<option value="MKD">Macedonian Denar (MKD)</option>
+		<option value="MMK">Myanmar Kyat (MMK)</option>
+		<option value="MNT">Mongolian Tugrik (MNT)</option>
+		<option value="MOP">Macanese Pataca (MOP)</option>
+		<option value="MRO">Mauritanian Ouguiya (MRO)</option>
+		<option value="MUR">Mauritian Rupee (MUR)</option>
+		<option value="MVR">Maldivian Rufiyaa (MVR)</option>
+		<option value="MWK">Malawian Kwacha (MWK)</option>
+		<option value="MXN">Mexican Peso (MX$)</option>
+		<option value="MYR">Malaysian Ringgit (MYR)</option>
+		<option value="MZN">Mozambican Metical (MZN)</option>
+		<option value="NAD">Namibian Dollar (NAD)</option>
+		<option value="NGN">Nigerian Naira (NGN)</option>
+		<option value="NIO">Nicaraguan Córdoba (NIO)</option>
+		<option value="NOK">Norwegian Krone (NOK)</option>
+		<option value="NPR">Nepalese Rupee (NPR)</option>
+		<option value="NZD">New Zealand Dollar (NZ$)</option>
+		<option value="OMR">Omani Rial (OMR)</option>
+		<option value="PAB">Panamanian Balboa (PAB)</option>
+		<option value="PEN">Peruvian Nuevo Sol (PEN)</option>
+		<option value="PGK">Papua New Guinean Kina (PGK)</option>
+		<option value="PHP">Philippine Peso (Php)</option>
+		<option value="PKG">PKG (PKG)</option>
+		<option value="PKR">Pakistani Rupee (PKR)</option>
+		<option value="PLN">Polish Zloty (PLN)</option>
+		<option value="PYG">Paraguayan Guarani (PYG)</option>
+		<option value="QAR">Qatari Rial (QAR)</option>
+		<option value="RON">Romanian Leu (RON)</option>
+		<option value="RSD">Serbian Dinar (RSD)</option>
+		<option value="RUB">Russian Ruble (RUB)</option>
+		<option value="RWF">Rwandan Franc (RWF)</option>
+		<option value="SAR">Saudi Riyal (SAR)</option>
+		<option value="SBD">Solomon Islands Dollar (SBD)</option>
+		<option value="SCR">Seychellois Rupee (SCR)</option>
+		<option value="SDG">Sudanese Pound (SDG)</option>
+		<option value="SEK">Swedish Krona (SEK)</option>
+		<option value="SGD">Singapore Dollar (SGD)</option>
+		<option value="SHP">Saint Helena Pound (SHP)</option>
+		<option value="SLL">Sierra Leonean Leone (SLL)</option>
+		<option value="SOS">Somali Shilling (SOS)</option>
+		<option value="SRD">Surinamese Dollar (SRD)</option>
+		<option value="STD">São Tomé and Príncipe Dobra (STD)</option>
+		<option value="SVC">Salvadoran Colón (SVC)</option>
+		<option value="SYP">Syrian Pound (SYP)</option>
+		<option value="SZL">Swazi Lilangeni (SZL)</option>
+		<option value="THB">Thai Baht (฿)</option>
+		<option value="TJS">Tajikistani Somoni (TJS)</option>
+		<option value="TMT">Turkmenistani Manat (TMT)</option>
+		<option value="TND">Tunisian Dinar (TND)</option>
+		<option value="TOP">Tongan Paʻanga (TOP)</option>
+		<option value="TRY">Turkish Lira (TRY)</option>
+		<option value="TTD">Trinidad and Tobago Dollar (TTD)</option>
+		<option value="TWD">New Taiwan Dollar (NT$)</option>
+		<option value="TZS">Tanzanian Shilling (TZS)</option>
+		<option value="UAH">Ukrainian Hryvnia (UAH)</option>
+		<option value="UGX">Ugandan Shilling (UGX)</option>
+		<option value="USD">US Dollar ($)</option>
+		<option value="UYU">Uruguayan Peso (UYU)</option>
+		<option value="UZS">Uzbekistan Som (UZS)</option>
+		<option value="VEF">Venezuelan Bolívar (VEF)</option>
+		<option value="VND">Vietnamese Dong (₫)</option>
+		<option value="VUV">Vanuatu Vatu (VUV)</option>
+		<option value="WST">Samoan Tala (WST)</option>
+		<option value="XAF">CFA Franc BEAC (FCFA)</option>
+		<option value="XCD">East Caribbean Dollar (EC$)</option>
+		<option value="XDR">Special Drawing Rights (XDR)</option>
+		<option value="XOF">CFA Franc BCEAO (CFA)</option>
+		<option value="XPF">CFP Franc (CFPF)</option>
+		<option value="YER">Yemeni Rial (YER)</option>
+		<option value="ZAR">South African Rand (ZAR)</option>
+		<option value="ZMK">Zambian Kwacha (1968–2012) (ZMK)</option>
+		<option value="ZMW">Zambian Kwacha (ZMW)</option>
+		<option value="ZWL">Zimbabwean Dollar (2009) (ZWL)</option>
+	</select>
+	
+	<div class="chart-horiz clearfix">
+    	<ul id="chart" class="chart">
+        	<li class="title" title="TITLE 1"></li>
+        </ul>
+    </div>
+	
+	<div id="pre">
+	</div>
+
+	<script type="text/javascript">
+		var cost = [];
+		
+		function setInfoMedication(theCost, theMyCountry, thePosition) {
+			document.getElementById("med1").innerHTML = "{{medication.cum}} {{medication.descripcion_atc}} {{medication.producto}}";
+		  	document.getElementById("med2").innerHTML = "{{medication.presentacion_comercial}}";
+		  	document.getElementById("med3").innerHTML = "Costo: $ " + theCost[thePosition] + ' ' + codeCountry;
+		}
+		
+		function main(){
+			{% set count2 = 0 %}
+			{% for c in medication.precio_maximo_de_venta_punto_mayorista %}
+				cost[{{count2}}] = parseFloat('{{c}}')*tasaBase;
+				{% set count2 = count2 + 1 %}
+			{% endfor %}
+			
+			var country = [];
+			var chart = document.getElementById("chart");
+			var lis = document.querySelectorAll('#chart li');
+			for(var i=0; li=lis[i]; i++) {
+			    li.parentNode.removeChild(li);
+			}
+			
+			{% set count2 = 0 %}
+			{% for c in medication.pais %}
+				country[{{count2}}] = '{{c}}';
+				
+				var li = document.createElement("li");
+		  		var span1 = document.createElement("span");
+		  		var span2 = document.createElement("span");
+		  		var textoSpan2 = document.createTextNode(Number((cost[{{count2}}]).toFixed(1)) );
+		  		
+		  		span2.setAttribute("class", "number");
+		  		
+		  		span1.setAttribute("class", "bar");
+		  		span1.setAttribute("data-number", cost[{{count2}}]);
+		  		
+		  		li.setAttribute("class", "past{{count2}}");
+		  		li.setAttribute("title", "{{c}}");
+		  		
+		  		span2.appendChild(textoSpan2);
+		  		li.appendChild(span1);
+		  		li.appendChild(span2);
+		  		chart.appendChild(li);
+				
+				{% set count2 = count2 + 1 %}
+			{% endfor %}
+			
+			var posit = country.indexOf(myCountry);
+			setInfoMedication(cost, myCountry, posit);			
+		  	
+		  	{% if length_presentations == 1 %}
+		  		var countries = [];
+		  		
+		  		{% set count = 0 %}
+				{% for c in medication.pais %}
+					countries.push('{{c}}');										
+					{% set count = count + 1 %}<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();" >Facebook</fb:login-button>
+					<a href="/{{this.name}}/{{this.route.action}}/:{{medication.key.urlsafe()}}?mode=login">
+			   		<input type="button" value="Login Twitter" />
+				</a>
+				{% endfor %}
+		  		
+		  	{% else %}
+		  			  		
+				var body = document.getElementById("pre");
+				var tabla = document.createElement("table");
+				var tblHead = document.createElement("thead");
+				var tblBody = document.createElement("tbody");
+				 
+				var fila = document.createElement("tr");
+				var celda = document.createElement("th");
+				var textoCelda = document.createTextNode("Descripción ATC");
+				celda.appendChild(textoCelda);
+				fila.appendChild(celda);
+					
+				celda = document.createElement("th");
+				textoCelda = document.createTextNode("Presentación Comercial");
+				celda.appendChild(textoCelda);
+				fila.appendChild(celda);
+					
+				celda = document.createElement("th");
+				textoCelda = document.createTextNode("Precio maximo de venta punto mayorista" + " (" + codeCountry + ")");
+				celda.appendChild(textoCelda);
+				fila.appendChild(celda);
+					
+				tblHead.appendChild(fila);
+				
+				var countries = [];
+				
+				var count = 0;
+				{% set count = 0 %}
+				{% for item in presentations if item!=medication %}
+					var medi{{count}} = ['{{item.descripcion_atc}}', '{{item.presentacion_comercial}}', '{{item.cum}}', '{{item.key.urlsafe()}}'];
+					
+					var country{{count}} = [];
+					{% set count2 = 0 %}
+					{% for c in item.pais %}
+						country{{count}}[{{count2}}] = '{{c}}';
+	
+						if(countries.indexOf('{{c}}')== -1){
+							countries.push('{{c}}');
+						}
+						
+						{% set count2 = count2 + 1 %}
+					{% endfor %}
+					
+					var cost{{count}} = [];
+					{% set count2 = 0 %}
+					{% for c in item.precio_maximo_de_venta_punto_mayorista %}
+						cost{{count}}[{{count2}}] = parseFloat('{{c}}')*tasaBase;
+												  
+						{% set count2 = count2 + 1 %}
+					{% endfor %}
+							
+					fila = document.createElement("tr");
+					
+				    celda = document.createElement("td");
+				    var link = document.createElement('a'); 
+				    link.setAttribute('href','/mayorista/view_medication/:'+medi{{count}}[3]);
+				    textoCelda = document.createTextNode(medi{{count}}[0]);
+					link.appendChild(textoCelda);
+					celda.appendChild(link);
+					fila.appendChild(celda);			    			    
+					tblBody.appendChild(fila);
+		
+				    celda = document.createElement("td");
+				    var link = document.createElement('a'); 
+				    link.setAttribute('href','/mayorista/view_medication/:'+medi{{count}}[3]);
+				    textoCelda = document.createTextNode(medi{{count}}[1]);
+				    link.appendChild(textoCelda);
+					celda.appendChild(link);
+					fila.appendChild(celda);
+					tblBody.appendChild(fila);
+					
+					var pos = country{{count}}.indexOf(myCountry);
+					   
+					celda = document.createElement("td");
+				    textoCelda = document.createTextNode('$ ' + cost{{count}}[pos]);
+					celda.appendChild(textoCelda);
+					fila.appendChild(celda);
+					tblBody.appendChild(fila);
+								    
+					{% set count = count + 1 %}
+					count = {{count}};
+				{% endfor %}
+				
+				tabla.appendChild(tblHead);
+				tabla.appendChild(tblBody);
+				body.appendChild(tabla);
+				tabla.setAttribute("border", "1");
+				
+			{% endif %}
+				
+
+			    graph2();
+		    
+		    
+		}
+		
+      function graph2(){
+    	  $('.chart').horizBarChart({
+    		  selector: '.bar',
+    		  speed: 1000
+    	  });
+      }
+      
+      function reFresh() {
+    	    location.reload(true);
+      }
+      
+      function sendPOST(){
+    	  var usr = "";
+    	  {% if ferris.format_value(this.user) != "None" %}
+    	  	usr = "{{ferris.format_value(this.user.key.urlsafe())}}";
+    	  {% endif %}
+    	  var med = "{{medication.key.urlsafe()}}";
+    	  $.ajax({
+    		  type: "POST",
+			  url: "/favorites/add_favorite",
+			  data: ("&user=" + usr
+					  +"&medication=" + med),
+			  success: function() {
+				  console.log( $( this ).serialize());
+			  }
+    	  });
+		}
+      
+      function sendCalification(cal){
+    	  var theUrl = "/mayorista/calification/:" + "{{medication.key.urlsafe()}}";
+    	  alert('Su calificación con ' + cal + ' estrellas, fue recibida. Gracias');
+    	  $.ajax({
+    		  type: "POST",
+			  url: theUrl,
+			  data: ("&calification=" + cal),
+			  success: function() {
+				  console.log( $( this ).serialize());
+				  reFresh();
+			  }
+    	  });
+		}
+      
+      	  		
+  		function leerCookie(nombre) {
+         var lista = document.cookie.split(";");
+         for (i in lista) {
+             var busca = lista[i].search(nombre);
+             if (busca > -1) {micookie=lista[i]}
+             }
+         var igual = micookie.indexOf("=");
+         var valor = micookie.substring(igual+1);
+         return valor;
+         }
+  		
+  		var safe_str = leerCookie('safe');
+  		var medi_str = leerCookie('medi');
+  		
+  		var safe = safe_str.split(",");
+  		var medi = medi_str.split(",");
+  		
+  		function redirect(url){
+			location.href=url;
+		}
+		
+		function getUrl(){
+			var info = document.getElementById('medicam').value;
+        	
+        	var position = medi.indexOf(info);
+        	if(position != -1) { 
+        		var url = "/mayorista/view_medication/:"+safe[position];
+        		redirect(url);
+        	}
+		}
+		
+		$(document).ready(function () {
+            $('input.medicam').typeahead({
+                name: 'medicamentos',
+                local: medi,
+                limit:10
+            });
+        });
+  		
+    </script>
+</body>

@@ -1,0 +1,803 @@
+<!doctype html>
+<head>
+
+	<title>{{medication.descripcion_atc}}</title>
+	
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<meta charset="UTF-8">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans'rel='stylesheet' type='text/css'>
+	
+	
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<link href="/css/horizBarChart.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="/js/jquery.horizBarChart.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.typeahead.js"></script>
+	
+	<script type="text/javascript" src="/ferris/js/bootstrap.js"></script>
+	<link href="/ferris/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/css/estilosmed.css" rel="stylesheet" type="text/css">
+	<link href="/css/estilosmedresponsive.css" rel="stylesheet" type="text/css">
+	<link href="/css/estrellas.css" rel="stylesheet" type="text/css">
+	<script src="/js/mayorista.js"></script>
+	
+	
+	<script type="text/javascript">
+		var myCountry = '';
+		var codeCountry = 'COP';
+		var tasaBase = 1.0;
+		  	
+		$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) { 
+			d = data.address.country;
+			d = d.toUpperCase()
+			c = data.address.country_code;
+			if(c == 'CO') {
+				c = 'COP';
+			}
+			getMyCountry(d,c);
+		});
+		  
+		function getMyCountry(data, code){
+			this.myCountry = data;
+			this.codeCountry = code;
+		  	main();
+		}
+		
+		function setTasaBase(n) {
+			this.tasaBase = n;
+		}
+		
+		function cleanDiv(name) {
+			var e = document.getElementById(name);
+			e.innerHTML = "";
+		}
+		
+		function changeCountry(){
+			var listSelect = document.getElementById('countries').value;
+			if(listSelect != 'Seleccione un Pais') {
+				cleanDiv("pre");
+				myCountry = listSelect;
+				main();
+			}			
+		}
+		
+		function changeMoney() {
+			var listSelect = document.getElementById('money').value;
+			this.codeCountry = listSelect;
+			if(listSelect == 'COP') {
+				setTasaBase(1);
+				cleanDiv("pre");
+		    	main();
+			}
+			else if(listSelect != 'Seleccione la Moneda') {
+				$.ajax({
+				    url: '/mayorista/change_money',
+				    type: 'POST',
+				    data: ("&money=" + listSelect),
+				    success: function(res) {
+				    	setTasaBase( parseFloat(res.split(" ")[0]) );
+				    	cleanDiv("pre");
+				    	main();
+				    }
+				});
+			}
+		}
+	</script>
+
+	<!-- Detecta el back Buttom -->
+	<script type="text/javascript">
+       jQuery(document).ready(function()
+        {
+                var d = new Date();
+                d = d.getTime();
+                if (jQuery('#reloadValue').val().length == 0)
+                {
+                        jQuery('#reloadValue').val(d);
+                        jQuery('body').show();
+                }
+                else
+                {
+                        jQuery('#reloadValue').val('');
+                        location.reload();
+                }
+        });
+   </script>
+</head>
+<body>
+<input id="reloadValue" type="hidden" name="reloadValue" value="" />
+ 
+<!-- ################################### -->
+<nav class="navbar navbar-default" role="navigation">
+		<div class="container bartopfarma">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#"> <img alt="Brand"
+						src="/images/logo.png" height="34">
+					</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="#">Acerca</a></li>
+						<li><a href="#">Información</a></li>
+						<li><a href="#">Blog</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li id="redessocialesline">
+							<div id="contredesnav">
+								<div class="itemredesnav">
+									<a href="#"><img src="/images/facebook_blanco.png"></a>
+								</div>
+								<div class="itemredesnav">
+									<a href="#"><img src="/images/twitter_blanco.png"></a>
+								</div>
+								<div class="itemredesnav">
+									<a href="#"><img src="/images/google_blanco.png"></a>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown" id="perfilusuariodrop">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
+								{% if user_provider_login == 'facebook' %} 
+									<img alt="user_img" height="50" src="http://graph.facebook.com/{{user_id_login}}/picture?type=square">
+								{% elif user_provider_login == 'google'%}
+									<img alt="user_img" height="50" src="https://profiles.google.com/s2/photos/profile/{{user_id_login}}">
+								{% elif user_provider_login == 'twitter'%} 
+									<img alt="user_img" height="50" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png">
+								{% endif %}
+								
+								{% if not user_lg %}
+									Perfil								
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="/login">Login</a></li>
+							</ul>
+							{% else %}
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="/mayorista/view_favorites">Favoritos / Perfil</a></li>
+								<li><a href="/logout">Salir</a></li>
+							</ul>
+							{% endif %}
+						</li>
+							
+
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+			<div class="form-group buscador">
+          	<div class="searchleft separasearch">
+        		<input id="medicam" type="text" class="form-control medicam" placeholder="Busca el medicamento">
+        	</div>
+        	 <div class="searchleft">
+            	<a href="#" style="text-decoration:none" onclick="getUrl()"><button type="submit" class="btn btn-default">Buscar</button></a>
+            </div>
+          </div>
+		</div>
+	</nav>
+        
+        
+<!-- ####################################### -->
+	
+	<div class="container">
+		<div class="medheader">
+			<div class="topmedicamento">
+				<div class="medicamento-header" layout horizontal center>
+					<div id="titlemed" class="titlemed"></div>
+					<div class="addfav">
+						{% if ferris.format_value(this.user) == "None" %}
+							<a href="/login">
+								<img class="custom" id="toes" src="/images/addfavoritos.png" aria-label="octocat" title="octocat" role="button" tabindex="0">
+							</a>
+					</div>
+					<div id="calificamed" >
+						<div id="valorcalificamed">
+							({% if medication.calification_amount==None %}0{% else %}{{medication.calification_amount}}{% endif %})
+						</div>
+							<div class="starRate">
+								<div><b></b></div>
+								<ul>
+									{% if medication.calification_average == 5 %}
+										<li><a href="/login"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="/login"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 4 %}
+										<li><a href="/login"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="/login"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 3 %}
+										<li><a href="/login"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="/login"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 2 %}
+										<li><a href="/login"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="/login"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 1 %}
+										<li><a href="/login"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="/login"><span></span></a></li>
+									{% endif %}
+								</ul>
+							</div>
+						{% else %}
+							<a href="#" onclick="sendPOST()">
+								<img class="custom" id="toes" src="/images/addfavoritos.png" aria-label="octocat" title="octocat" role="button" tabindex="0">
+							</a>
+							<div class="starRate">
+								<div><b></b></div>
+								<ul>
+									{% if medication.calification_average == 5 %}
+										<li><a href="#" onclick="sendCalification(5,'{{medication.key.urlsafe()}}')"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="#" onclick="sendCalification(5,'{{medication.key.urlsafe()}}')"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 4 %}
+										<li><a href="#" onclick="sendCalification(4,'{{medication.key.urlsafe()}}')"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="#" onclick="sendCalification(4,'{{medication.key.urlsafe()}}')"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 3 %}
+										<li><a href="#" onclick="sendCalification(3,'{{medication.key.urlsafe()}}')"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="#" onclick="sendCalification(3,'{{medication.key.urlsafe()}}')"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 2 %}
+										<li><a href="#" onclick="sendCalification(2,'{{medication.key.urlsafe()}}')"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="#" onclick="sendCalification(2,'{{medication.key.urlsafe()}}')"><span></span></a></li>
+									{% endif %}			
+									{% if medication.calification_average == 1 %}
+										<li><a href="#" onclick="sendCalification(1,'{{medication.key.urlsafe()}}')"><span></span><b></b></a></li>
+									{% else %}
+										<li><a href="#" onclick="sendCalification(1,'{{medication.key.urlsafe()}}')"><span></span></a></li>
+									{% endif %}
+								</ul>
+							</div>
+						{% endif %}
+					</div>
+
+				</div>
+				<div class="lineaseparacion">&nbsp;</div>
+				<div class="medicamento-body">
+
+					<div class="ico_tipo_medicamento">
+						<img src="/images/pastilla.png" />
+					</div>
+					<div class="informacion_total">
+						<div class="row">
+							<div id="codigo_CUM" class="codigo_CUM"></div>
+						</div>
+						<div class="row">
+							<div class="caracteristicas_medicamento">
+								<div class="titulo_caracteristica">Producto</div>
+								<div id="info_caracteristica_prod" class="info_caracteristica"></div>
+							</div>
+							<div class="separadorvertical">&nbsp;</div>
+							<div class="caracteristicas_medicamento">
+								<div class="titulo_caracteristica">Cantidad de principio activo</div>
+								<div id="info_caracteristica_cant" class="info_caracteristica"></div>
+							</div>
+							<div class="separadorvertical">&nbsp;</div>
+							<div class="caracteristicas_medicamento">
+								<div class="titulo_caracteristica">Presentación comercial</div>
+								<div id="info_caracteristica_pres" class="info_caracteristica"></div>
+							</div>
+							<div class="separadorvertical">&nbsp;</div>
+							<div class="caracteristicas_medicamento">
+								<div class="titulo_caracteristica">Titular</div>
+								<div id="info_caracteristica_titu" class="info_caracteristica"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="precioheader">
+				<div class="tituloprecio">PRECIO MAYORISTAS</div>
+				<div class="contenedorprecio">
+					<div id="valormedicamento" class="valormedicamento"></div>
+					<div class="tasadecambio">
+
+						<!-- dropdown cambio de moneda-->
+						<select id="money" onchange="changeMoney()">
+							<option value="Seleccione la Moneda" selected="">Seleccione la Moneda</option>							
+							<option value="EUR">Euro (€)</option>
+							<option value="USD">US Dollar ($)</option>							
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="lineaseparacion">&nbsp;</div>
+		</div>
+		
+		<div class="relacionadotitu">COMPARACIÓN</div>
+		<div class="graficosmedicamento">
+			<div class="chart-horiz clearfix">
+    			<ul id="chart" class="chart">
+		        	<li class="title" title="COSTOS"></li>
+		        </ul>
+	    	</div>	    		
+		</div>
+		
+		<div class="lineaseparacion">&nbsp;</div>
+		
+		<!-- Creacion de Medicamentos Relacionados -->
+		<div id="pre">
+					
+		</div>
+		
+
+		<div class="lineaseparacion"></div>
+
+		<div class="comment-user">
+			<div class="topcomment">
+				<div class="comment-body">
+
+					<div class="ico_persona">
+						<img src="/images/avatar-01.svg">
+					</div>
+					<div class="info_comment">
+						<div class="rowuser barusuariocomment">
+							<div class="nombre_usuario">pepito perez</div>
+							<div class="fechacomment">Hace 3 días</div>
+							<div class="contestrella">
+								<div class="estrellas">
+									<img src="/images/facebook_blanco.png" />
+								</div>
+								<div class="estrellas">
+									<img src="/images/twitter_blanco.png" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="text_comentario">no me parece</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+		var cost = [];
+		localStorage.setItem('my_urlsafe', '/{{this.name}}/{{this.route.action}}/:{{medication.key.urlsafe()}}');
+		
+				
+		function setInfoMedication(theCost, theMyCountry, thePosition) {
+			document.getElementById("titlemed").innerHTML = "{{medication.descripcion_atc}}";
+			document.getElementById("codigo_CUM").innerHTML = "CUM # {{medication.cum}}";
+			document.getElementById("info_caracteristica_prod").innerHTML = "{{medication.producto}}";
+			document.getElementById("info_caracteristica_cant").innerHTML = "{{medication.cantidad_principio_activo}} {{medication.unidad_base}}";
+			document.getElementById("info_caracteristica_pres").innerHTML = "{{medication.presentacion_comercial}}";
+			document.getElementById("info_caracteristica_titu").innerHTML = "{{medication.titular}}";
+			document.getElementById("valormedicamento").innerHTML = formato_numero(theCost[thePosition], 2, ',', '.') + ' ' + codeCountry;
+		}
+		
+		function main(){
+			{% set count2 = 0 %}
+			{% for c in medication.precio_maximo_de_venta_punto_mayorista %}
+				cost[{{count2}}] = parseFloat('{{c}}')*tasaBase;
+				{% set count2 = count2 + 1 %}
+			{% endfor %}
+			
+			var country = [];
+			var chart = document.getElementById("chart");
+			var lis = document.querySelectorAll('#chart li');
+			for(var i=0; li=lis[i]; i++) {
+			    li.parentNode.removeChild(li);
+			}
+			
+			{% set count2 = 0 %}
+			{% for c in medication.pais %}
+				country[{{count2}}] = '{{c}}';
+				
+				var li = document.createElement("li");
+		  		var span1 = document.createElement("span");
+		  		var span2 = document.createElement("span");
+		  		var textoSpan2 = document.createTextNode(formato_numero(cost[{{count2}}], 2, ',', '.') );
+		  		
+		  		span2.setAttribute("class", "number");
+		  		
+		  		span1.setAttribute("class", "bar");
+		  		span1.setAttribute("data-number", cost[{{count2}}]);
+		  		
+		  		li.setAttribute("class", "past{{count2}}");
+		  		li.setAttribute("title", "{{c}}");
+		  		
+		  		span2.appendChild(textoSpan2);
+		  		
+		  		li.appendChild(span2);
+		  		li.appendChild(span1);
+		  		
+		  		chart.appendChild(li);
+				
+				{% set count2 = count2 + 1 %}
+			{% endfor %}
+			
+			var posit = country.indexOf(myCountry);
+			setInfoMedication(cost, myCountry, posit);			
+		  	
+		  	{% if length_presentations == 1 %}
+		  		var countries = [];
+		  		
+		  		{% set count = 0 %}
+				{% for c in medication.pais %}
+					countries.push('{{c}}');										
+					{% set count = count + 1 %}<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();" >Facebook</fb:login-button>
+					<a href="/{{this.name}}/{{this.route.action}}/:{{medication.key.urlsafe()}}?mode=login">
+			   		<input type="button" value="Login Twitter" />
+				</a>
+				{% endfor %}
+		  		
+		  	{% else %}
+		  						
+				var countries = [];
+				
+				var count = 0;
+				{% set count = 0 %}
+				{% for item in presentations if item!=medication %}
+					var medi{{count}} = ['{{item.descripcion_atc}}', '{{item.presentacion_comercial}}', '{{item.cum}}', '{{item.key.urlsafe()}}'];
+					
+					var country{{count}} = [];
+					{% set count2 = 0 %}
+					{% for c in item.pais %}
+						country{{count}}[{{count2}}] = '{{c}}';
+	
+						if(countries.indexOf('{{c}}')== -1){
+							countries.push('{{c}}');
+						}
+						
+						{% set count2 = count2 + 1 %}
+					{% endfor %}
+					
+					var cost{{count}} = [];
+					{% set count2 = 0 %}
+					{% for c in item.precio_maximo_de_venta_punto_mayorista %}
+						cost{{count}}[{{count2}}] = parseFloat('{{c}}')*tasaBase;
+												  
+						{% set count2 = count2 + 1 %}
+					{% endfor %}
+							
+					
+								    
+					var pos = country{{count}}.indexOf(myCountry);
+					
+					var pre = document.getElementById("pre");
+			  		var med_relacionado = document.createElement("div");
+			  		med_relacionado.setAttribute("class", "med-relacionado");
+				  		var topmedrel = document.createElement("div");
+				  		topmedrel.setAttribute("class", "topmedrel");
+					  		var medrel_body = document.createElement("div");
+					  		medrel_body.setAttribute("class", "medrel-body");
+						  		var ico_tipo_medicamento2 = document.createElement("div");
+						  		ico_tipo_medicamento2.setAttribute("class", "ico_tipo_medicamento2");
+							  		var img1 = document.createElement("img");
+							  		img1.setAttribute("src","/images/pastilla.png");
+						  		var inforel_left = document.createElement("div");
+						  		inforel_left.setAttribute("class","inforel_left");
+						  			var row_datanamerel = document.createElement("div");
+						  			row_datanamerel.setAttribute("class","row datanamerel");
+						  				var titlemedrel = document.createElement("div");
+						  				titlemedrel.setAttribute("class","titlemedrel");
+						  				var link = document.createElement('a');
+						  				link.setAttribute('href','/mayorista/view_medication/:'+medi{{count}}[3]);
+						  				var text_titlemedrel = document.createTextNode("{{item.descripcion_atc}}");
+						  				
+						  				var cod_CUM_rel = document.createElement("div");
+						  				cod_CUM_rel.setAttribute("class","cod_CUM_rel");
+						  				var text_cod_CUM_rel = document.createTextNode("CUM # {{item.cum}}");
+						  				
+						  				var contestrella = document.createElement("div");
+						  				contestrella.setAttribute("class","contestrella");
+						  					var estrellas1 = document.createElement("div");
+						  					estrellas1.setAttribute("class","estrellas");
+						  						var img2 = document.createElement("img");
+						  						img2.setAttribute("src","/images/estrella_color.png");
+						  					var estrellas2 = document.createElement("div");
+							  				estrellas2.setAttribute("class","estrellas");
+							  					var img3 = document.createElement("img");
+							  					img3.setAttribute("src","/images/estrella_color.png");
+							  				var estrellas3 = document.createElement("div");
+							  				estrellas3.setAttribute("class","estrellas");
+							  					var img4 = document.createElement("img");
+							  					img4.setAttribute("src","/images/estrella_color.png");
+							  				var estrellas4 = document.createElement("div");
+							  				estrellas4.setAttribute("class","estrellas");
+							  					var img5 = document.createElement("img");
+							  					img5.setAttribute("src","/images/estrella_color.png");
+							  				var estrellas5 = document.createElement("div");
+							  				estrellas5.setAttribute("class","estrellas");
+							  					var img6 = document.createElement("img");
+							  					img6.setAttribute("src","/images/estrella_linea.png");
+							  				var estrellas_usuaestrellas = document.createElement("div");
+							  				estrellas_usuaestrellas.setAttribute("class","estrellas usuaestrellas");
+							  				var text_estrellas_usuaestrellas = document.createTextNode("({% if item.calification_amount==None %}0{% else %}{{item.calification_amount}}{% endif %})");
+							  		var row = document.createElement("div");
+							  		row.setAttribute("class","row");
+							  			var caracteristicas_medrel1 = document.createElement("div");
+							  			caracteristicas_medrel1.setAttribute("class","caracteristicas_medrel");
+							  				var info_caracteristica2_dataproductmain = document.createElement("div");
+							  				info_caracteristica2_dataproductmain.setAttribute("class","info_caracteristica2 dataproductmain");
+							  					var text_info_caracteristica2_dataproductmain = document.createTextNode("{{item.producto}}");
+							  			var separadorvertical1 = document.createElement("div");
+							  			separadorvertical1.setAttribute("class","separadorverticalrel");
+							  				var text_separadorvertical = document.createTextNode("&nbsp;");
+							  			var caracteristicas_medrel2 = document.createElement("div");
+							  			caracteristicas_medrel2.setAttribute("class","caracteristicas_medrel");
+							  				var info_caracteristica2_1 = document.createElement("div");
+							  				info_caracteristica2_1.setAttribute("class","info_caracteristica2");
+							  					var text_info_caracteristica2_1 = document.createTextNode("{{item.cantidad_principio_activo}} {{item.unidad_base}}");
+							  			var separadorvertical2 = document.createElement("div");
+							  			separadorvertical2.setAttribute("class","separadorverticalrel");
+								  		
+								  		var caracteristicas_medrel3 = document.createElement("div");
+							  			caracteristicas_medrel3.setAttribute("class","caracteristicas_medrel");
+								  			var info_caracteristica2_2 = document.createElement("div");
+							  				info_caracteristica2_2.setAttribute("class","info_caracteristica2");
+							  					var text_info_caracteristica2_2 = document.createTextNode("{{item.presentacion_comercial}}");
+							  			
+							  			var separadorvertical3 = document.createElement("div");
+									  	separadorvertical3.setAttribute("class","separadorverticalrel");
+							  			
+							  			var caracteristicas_medrel4 = document.createElement("div");
+							  			caracteristicas_medrel4.setAttribute("class","caracteristicas_medrel");
+								  			var info_caracteristica2_3 = document.createElement("div");
+							  				info_caracteristica2_3.setAttribute("class","info_caracteristica2");
+							  					var text_info_caracteristica2_3 = document.createTextNode("{{item.titular}}");
+						  		
+						  		var inforel_right = document.createElement("div"); 
+						  		inforel_right.setAttribute("class","inforel_right");
+						  			var valormedrel = document.createElement("div");
+						  			valormedrel.setAttribute("class","valormedrel");
+						  			var text_valormedrel = document.createTextNode(formato_numero(cost{{count}}[pos], 2, ',', '.') + " " + codeCountry);
+						  			
+		  		ico_tipo_medicamento2.appendChild(img1);
+		  		medrel_body.appendChild(ico_tipo_medicamento2);
+		  		
+		  		titlemedrel.appendChild(text_titlemedrel);
+		  		link.appendChild(titlemedrel);
+		  		row_datanamerel.appendChild(link);
+		  		cod_CUM_rel.appendChild(text_cod_CUM_rel);
+		  		row_datanamerel.appendChild(cod_CUM_rel);
+		  		
+		  		var startRate = document.createElement("div");
+		  		startRate.setAttribute("class","starRate");
+		  		var start_d = document.createElement("div");
+		  		var start_b1 = document.createElement("b");
+		  		var start_ul = document.createElement("ul");
+		  		
+		  		{% if ferris.format_value(this.user) == "None" %}
+			  		var start_li1 = document.createElement("li");
+			  		var start_a1 = document.createElement("a");
+			  		start_a1.setAttribute("href","/login");
+			  		var start_span1 = document.createElement("span");
+			  		var text_start_span1 = document.createTextNode("");
+			  		
+			  		var start_li2 = document.createElement("li");
+			  		var start_a2 = document.createElement("a");
+			  		start_a2.setAttribute("href","/login");
+			  		var start_span2 = document.createElement("span");
+			  		var text_start_span2 = document.createTextNode("");
+			  		
+			  		var start_li3 = document.createElement("li");
+			  		var start_a3 = document.createElement("a");
+			  		start_a3.setAttribute("href","/login");
+			  		var start_span3 = document.createElement("span");
+			  		var text_start_span3 = document.createTextNode("");
+			  		
+			  		var start_li4 = document.createElement("li");
+			  		var start_a4 = document.createElement("a");
+			  		start_a4.setAttribute("href","/login");
+			  		var start_span4 = document.createElement("span");
+			  		var text_start_span4 = document.createTextNode("");
+			  		
+			  		var start_li5 = document.createElement("li");
+			  		var start_a5 = document.createElement("a");
+			  		start_a5.setAttribute("href","/login");
+			  		var start_span5 = document.createElement("span");
+			  		var text_start_span5 = document.createTextNode("");
+			  	{% else %}
+				  	var start_li1 = document.createElement("li");
+			  		var start_a1 = document.createElement("a");
+			  		start_a1.setAttribute("href","#");
+			  		start_a1.setAttribute("onclick","sendCalification(1,'{{item.key.urlsafe()}}')");
+			  		var start_span1 = document.createElement("span");
+			  		var text_start_span1 = document.createTextNode("");
+			  		
+			  		var start_li2 = document.createElement("li");
+			  		var start_a2 = document.createElement("a");
+			  		start_a2.setAttribute("href","#");
+			  		start_a2.setAttribute("onclick","sendCalification(2,'{{item.key.urlsafe()}}')");
+			  		var start_span2 = document.createElement("span");
+			  		var text_start_span2 = document.createTextNode("");
+			  		
+			  		var start_li3 = document.createElement("li");
+			  		var start_a3 = document.createElement("a");
+			  		start_a3.setAttribute("href","#");
+			  		start_a3.setAttribute("onclick","sendCalification(3,'{{item.key.urlsafe()}}')");
+			  		var start_span3 = document.createElement("span");
+			  		var text_start_span3 = document.createTextNode("");
+			  		
+			  		var start_li4 = document.createElement("li");
+			  		var start_a4 = document.createElement("a");
+			  		start_a4.setAttribute("href","#");
+			  		start_a4.setAttribute("onclick","sendCalification(4,'{{item.key.urlsafe()}}')");
+			  		var start_span4 = document.createElement("span");
+			  		var text_start_span4 = document.createTextNode("");
+			  		
+			  		var start_li5 = document.createElement("li");
+			  		var start_a5 = document.createElement("a");
+			  		start_a5.setAttribute("href","#");
+			  		start_a5.setAttribute("onclick","sendCalification(5,'{{item.key.urlsafe()}}')");
+			  		var start_span5 = document.createElement("span");
+			  		var text_start_span5 = document.createTextNode("");
+			  	{% endif %}
+		  		
+		  		var start_b2 = document.createElement("b");
+		  		
+		  		start_span5.appendChild(text_start_span5);
+		  		start_a5.appendChild(start_span5);		  		
+		  		start_li5.appendChild(start_a5);
+		  		start_ul.appendChild(start_li5);
+		  		
+		  		start_span4.appendChild(text_start_span4);
+		  		start_a4.appendChild(start_span4);
+		  		start_li4.appendChild(start_a4);
+		  		start_ul.appendChild(start_li4);
+		  		
+		  		start_span3.appendChild(text_start_span3);
+		  		start_a3.appendChild(start_span3);
+		  		start_li3.appendChild(start_a3);
+		  		start_ul.appendChild(start_li3);
+		  		
+		  		start_span2.appendChild(text_start_span2);
+		  		start_a2.appendChild(start_span2);
+		  		start_li2.appendChild(start_a2);
+		  		start_ul.appendChild(start_li2);
+		  		
+		  		start_span1.appendChild(text_start_span1);
+		  		start_a1.appendChild(start_span1);
+		  		start_li1.appendChild(start_a1);
+		  		start_ul.appendChild(start_li1);
+		  		
+		  		{% if item.calification_average!=0 %}
+		  			start_a{{item.calification_average}}.appendChild(start_b2);
+		  		{% endif %}
+		  		
+		  		start_d.appendChild(start_b1);
+		  		
+		  		startRate.appendChild(start_d);
+		  		startRate.appendChild(start_ul);
+		  		
+		  		estrellas_usuaestrellas.appendChild(text_estrellas_usuaestrellas);
+		  		contestrella.appendChild(estrellas_usuaestrellas);
+		  		
+		  		contestrella.appendChild(startRate);
+		  		
+		  		row_datanamerel.appendChild(contestrella);
+		  		
+		  		inforel_left.appendChild(row_datanamerel);
+		  			  		
+		  		
+		  		info_caracteristica2_dataproductmain.appendChild(text_info_caracteristica2_dataproductmain);
+		  		caracteristicas_medrel1.appendChild(info_caracteristica2_dataproductmain);
+		  		row.appendChild(caracteristicas_medrel1);
+		  		row.appendChild(separadorvertical1);
+		  		
+		  		info_caracteristica2_1.appendChild(text_info_caracteristica2_1);
+		  		caracteristicas_medrel2.appendChild(info_caracteristica2_1);
+		  		row.appendChild(caracteristicas_medrel2);
+		  		row.appendChild(separadorvertical2);
+		  		
+		  		info_caracteristica2_2.appendChild(text_info_caracteristica2_2);
+		  		caracteristicas_medrel3.appendChild(info_caracteristica2_2);
+		  		row.appendChild(caracteristicas_medrel3);
+		  		row.appendChild(separadorvertical3);
+		  		
+		  		info_caracteristica2_3.appendChild(text_info_caracteristica2_3);
+		  		caracteristicas_medrel4.appendChild(info_caracteristica2_3);
+		  		row.appendChild(caracteristicas_medrel4);
+		  		
+		  		inforel_left.appendChild(row);
+		  		
+		  		medrel_body.appendChild(inforel_left);
+		  		
+		  		inforel_right.appendChild(valormedrel);
+		  		valormedrel.appendChild(text_valormedrel);
+		  		medrel_body.appendChild(inforel_right);
+		  		
+		  		topmedrel.appendChild(medrel_body);
+		  		med_relacionado.appendChild(topmedrel);
+		  		pre.appendChild(med_relacionado);
+		  		
+		  		{% set count = count + 1 %}
+				count = {{count}};
+		  		
+				{% endfor %} 
+				
+			{% endif %}
+				
+
+			    graph2();
+		    
+		    
+		}
+		
+      function graph2(){
+    	  $('.chart').horizBarChart({
+    		  selector: '.bar',
+    		  speed: 1000
+    	  });
+      }
+      
+      
+      function sendPOST(){
+    	  var usr = "";
+    	  {% if ferris.format_value(this.user) != "None" %}
+    	  	usr = "{{ferris.format_value(this.user.key.urlsafe())}}";
+    	  {% endif %}
+    	  var med = "{{medication.key.urlsafe()}}";
+    	  $.ajax({
+    		  type: "POST",
+			  url: "/favorites/add_favorite",
+			  data: ("&user=" + usr
+					  +"&medication=" + med),
+			  success: function() {
+				  console.log( $( this ).serialize());
+			  }
+    	  });
+		}
+      
+      	var medi = localStorage.getItem('medi_ls').split(',');
+		var safe = localStorage.getItem('safe_ls').split(',');
+  		  		
+		$(document).ready(function () {
+            $('input.medicam').typeahead({
+                name: 'medicamentos',
+                local: medi,
+                limit:10
+            });
+        });
+		
+		function setOptionsMoney() {
+			var sel = document.getElementById("money");
+			{% set count = 0 %}
+			{% for coin in countries_coins %}			
+				var opt = document.createElement("option");
+				opt.setAttribute("value","{{countries_codes[count]}}");
+		  		var opt_text = document.createTextNode("{{coin}}");
+		  		
+		  		opt.appendChild(opt_text);
+		  		sel.appendChild(opt);
+		  		
+		  		{% set count = count +1 %}
+	  		{% endfor %}
+		}
+		setOptionsMoney();
+		
+    </script>
+
+</html>
+

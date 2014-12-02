@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+	<translation id="menu1">
+		<english>About</english>
+		<espanol>Acerca</espanol>
+	</translation>
+    
+    <translation id="menu2">
+		<english>Users</english>
+		<espanol>Usuarios</espanol>
+	</translation>
+    
+    <translation id="menu3">
+		<english>Information</english>
+		<espanol>Información</espanol>
+	</translation>
+    
+    <translation id="menu4">
+		<english>Why Now?</english>
+		<espanol>Momento</espanol>
+	</translation>
+    
+    <translation id="slogan">
+		<english>The <b>Something</b> perfect</english>
+		<espanol>El <b>medicamento</b> adecuado, con el <b>precio</b> justo en el <b>lugar</b> correcto.</espanol>
+	</translation>
+    
+    <translation id="acercatitu">
+        <english>Lorem ipsum dolor sit amet</english>
+		<espanol>Acerca de</espanol>
+    </translation>
+    
+    <translation id="acercacontenido">
+        <english>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</english>
+		<espanol>Farma.social busca que los clientes/usuarios finales cuenten con una herramienta en la que pueden reportar los mejores precios y lugares en los que pueden adquirirse los medicamentos que necesitan, ser alertados cuando otros informen mejores precios o actuar en grupo para denunciar lugares en los que el costo es muy alto y opinar acerca de la calidad del servicio. De igual forma, busca que para los casos en que el stock es muy bajo o no logran encontrar el medicamento por estar agotado, el conjunto de usuarios y farmacias puedan indicar en donde hay existencias del medicamento requerido.<br></br><br></br>
+            
+En países como Colombia, en donde no existe un control eficaz y detallado en cada farmacia para el control o al menos verificación del precio de todos los medicamentos, tanto los que son formulados por los médicos (Medicamentos con venta bajo prescripción), como aquellos que están disponibles de forma libre, sin prescripción (OTC Drugs - Over The Counter Drugs), son las personas de forma aislada quienes terminan construyendo sus propias rutinas y lugares predilectos de compra de medicamentos sin tener a mano una herramienta que les permita saber en dónde pueden encontrar los medicamentos que requieren al mejor precio. <br></br><br></br>
+
+Algunos gobiernos de América Latina han trabajado durante los últimos años en el diseño e implantación de mecanismos que buscan, no solo controlar los valores máximos de los medicamentos, sino garantizar que estos cuenten con un precio similar o equivalente al que puede encontrarse en otros países. Sin embargo, estas iniciativas solo han podido apuntar al control de precio entre laboratorios y mayoristas quedando fuera el seguimiento a precios para usuario final.<br></br><br></br>
+
+Este fenómeno de variabilidad  de precios entre puntos de venta  y/o  altos precios para medicinas específicas, ha provocado que para los usuarios finales sea importante estar a la búsqueda no solo de alternativas de precio sino de equivalencias en medicamentos que puedan garantizar la misma composición: principios activos y resultados. Esta búsqueda, unida a un sistema pobre de control en las farmacias,  provoca que en algunos casos los pacientes adquieran medicamentos no adecuados en pro de un mejor precio.
+            
+            
+</espanol>
+    </translation>
+    
+    
+    <!--Nuestros usuarios-->
+    
+    <translation id="usuariostitu">
+        <english>OUR USERS</english>
+		<espanol>NUESTROS USUARIOS</espanol>
+    </translation>
+    
+    <!--Pacientes Tipo 1-->
+    
+    <translation id="tipousuario1">
+        <english>Pacients</english>
+		<espanol>Pacientes</espanol>
+    </translation>
+    
+    <translation id="contenidousuario1">
+        <english>Inglés</english>
+		<espanol><h1>Pacientes</h1>Personas comunes que necesitan comprar medicamentos, en especial aquellos que deben hacerlo de forma frecuente debido a su condición o la de alguien cercano. Para ellos el gasto en medicamentos es cotidiano, constante y por tanto están interesados en mejores precios y lugares más cercanos e incluso en versiones equivalentes de los medicamentos que debe adquirir.<br></br><br></br>Adicionalmente farma.social capta y comparte los sentimientos y evaluación básica de los efectos secundarios dentro de las comunidades de pacientes. Esta información es de gran ayuda y apoyo para promover y facilitar que los pacientes desarrollen de forma completa sus tratamientos.</espanol>
+    </translation>
+    
+    
+    <!--Pacientes Tipo 2-->
+    
+    <translation id="tipousuario2">
+        <english>Doctors</english>
+		<espanol>Médicos</espanol>
+    </translation>
+    
+    <translation id="contenidousuario2">
+        <english>Inglés</english>
+		<espanol><h1>Médicos</h1>Farma.social busca facilitar la gestión y seguimiento del ciclo completo de la medicación de los pacientes: desde la formulación hasta la toma. Para el médico entrega herramientas para facilitar la gestión de la historia de formulación entregada a sus pacientes con alertas sobre los ciclos  que ya ha cumplido un paciente, permitiendo así un contacto directo para recordar a sus pacientes los controles o seguimiento en la toma de medicamentos dentro del tratamiento a condiciones específicas.</espanol>
+    </translation>
+    
+    
+    <!--Pacientes Tipo 3-->
+    
+    <translation id="tipousuario3">
+        <english>Drug Store</english>
+		<espanol>Farmacias</espanol>
+    </translation>
+    
+    <translation id="contenidousuario3">
+        <english>Inglés</english>
+		<espanol><h1>Farmacias</h1>Con más de 30.000 farmacias existentes en Colombia, normalmente creadas como un pequeño negocio familiar, en las que no existe un CRM o un esquema de fidelización y lista de clientes, farma.social brinda una herramienta con la que pueden ampliar su base de clientes y ventas. Adicionalmente entrega herramientas básicas y avanzadas de benchmarking para establecer las necesidades de forma segmentada según ubicación y tipos de población a las que atienden.</espanol>
+    </translation>
+    
+    
+    <!--Pacientes Tipo 4-->
+    
+    <translation id="tipousuario4">
+        <english>Government</english>
+		<espanol>Gobierno</espanol>
+    </translation>
+    
+    
+    <translation id="contenidousuario4">
+        <english>Inglés</english>
+		<espanol><h1>Gobierno</h1>Farma.social cuenta con una muestra significativa del estado, variación e histórico de precios finales al público de los medicamentos junto con ubicación geográfica con gran exactitud. Los análisis de sentimientos y efectos secundarios son de gran valor para el diseño y evaluación de políticas y normativa gubernamental frente a los medicamentos.</espanol>
+    </translation>
+    
+    
+    
+    <!--Pacientes Tipo 5-->
+    
+    <translation id="tipousuario5">
+        <english>Labs</english>
+		<espanol>Farmaceúticas</espanol>
+    </translation>
+    
+    
+    <translation id="contenidousuario5">
+        <english>Inglés</english>
+		<espanol><h1>Farmaceúticas</h1>Interesadas en ver la opinión de los clientes sobre sus medicamentos y su relación vs. la competencia.  La información de sentimientos y efectos secundarios en medicamentos o grupos de medicamentos clasificados por variables específicas como: componentes activos, edades, sectores, estratos, etc. brindan gran ayuda para la evolución de las estrategias de las farmaceúticas frente a sus clientes: actuales y potenciales.</espanol>
+    </translation>
+    
+    
+    <!--Pacientes Tipo 6-->
+    
+    <translation id="tipousuario6">
+        <english>Medical Ensurance</english>
+		<espanol>EPS</espanol>
+    </translation>
+    
+    
+    <translation id="contenidousuario6">
+        <english>Inglés</english>
+		<espanol><h1>EPS</h1>Percepción y sentimientos de los usuarios frente a medicamentos de uso común recetados por la entidad.<br></br><br></br>Campañas de prevención en conjunto con las farmaceúticas y orientadas a los usuarios. </espanol>
+    </translation>
+    
+    <!--:D-->
+    
+    
+    <translation id="informaciontitulo1">
+        <english>Find The Best Price</english>
+		<espanol>Encontrar el mejor precio</espanol>
+    </translation>
+    
+    <translation id="informacioncont1">
+        <english>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo
+                  cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
+        </english>
+		<espanol>La diferencia de costos de los mismos medicamentos en diferentes droguerías/farmacias.<br></br><br></br>
+Qué medicamentos son equivalentes.<br></br><br></br>
+Dónde puedo encontrar medicamentos que estén agotados en los lugares que habitualmente frecuento.
+        </espanol>
+    </translation>
+    
+    
+    <translation id="informaciontitulo2">
+        <english>Side Effects and Effectiveness</english>
+		<espanol>Efectos Secundarios y Efectividad</espanol>
+    </translation>
+    
+    <translation id="informacioncont2">
+        <english>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
+        </english>
+		<espanol>Cuáles son los efectos y síntomas secundarios que normalmente la gente puede tener al tomar un medicamento.<br></br><br></br>
+Cómo evalúa la gente la efectividad de un medicamento.
+        </espanol>
+    </translation>
+    
+    <translation id="informaciontitulo3">
+        <english>Handle It</english>
+		<espanol>Cómo sobrellevar mi condición</espanol>
+    </translation>
+    
+    <translation id="informacioncont3">
+        <english>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
+        </english>
+		<espanol>Cuáles actividades puedo o no desarrollar.<br></br><br></br>
+Qué han hecho otros para llevar una vida normal.<br></br><br></br>
+Quiénes pueden apoyarme para vivir mejor.
+        </espanol>
+    </translation>
+    
+    <translation id="informaciontitulo4">
+        <english>Best Diagnostic</english>
+		<espanol>El diagnóstico Adecuado</espanol>
+    </translation>
+    
+    <translation id="informacioncont4">
+         <english>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
+        </english>
+		<espanol>Los pacientes que han sido mal diagnosticados y las personas que no se han diagnosticado.
+        </espanol>
+    </translation>
+    
+    <translation id="informaciontitulo5">
+        <english>Data by Profile</english>
+		<espanol>Datos para todo tipo de perfiles</espanol>
+    </translation>
+    
+    <translation id="informacioncont5">
+        <english>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
+        </english>
+		<espanol>Presentar la información de forma simple para que el ciudadano común pueda realizar su propia evaluación sobre datos de su interés.<br></br><br></br>
+Contar con un dashboard avanzado para quienes tienen necesidades de investigación.
+        </espanol>
+    </translation>
+    
+    <translation id="momentotitu">
+        <english>WHY NOW?</english>
+		<espanol>¿POR QUÉ EN ESTE MOMENTO?</espanol>
+    </translation>
+    
+    
+    <translation id="monentoctitu1">
+        <english>Changes</english>
+		<espanol>Es el momento adecuado:</espanol>
+    </translation>
+    
+    <translation id="monentoccont1">
+        <english>
+            <ul>
+                <li>ENGLISH 1</li>
+                <li>ENGLISH 2</li>
+            </ul>
+        </english>
+		<espanol>
+            <ul>
+                <li>Se han implementado grandes cambios en la normativa y regulación de medicamentos, es de gran interés para los gobiernos contar con herramientas que den cuenta del estado de avance en la aplicación de este tipo de normas.</li><br></br>
+                <li>De forma complementaria las políticas de acceso abierto a datos del gobierno facilitan contar con insumos importantes relativos a los medicamentos que cuentan con registro activo en cada país así como sobre las farmacias autorizadas para su venta.</li>
+            </ul>
+        </espanol>
+    </translation>
+    
+    <translation id="monentoctitu2">
+        <english>Technology</english>
+		<espanol>Mejor Tecnología y Servicios Innovadores basados en la gente</espanol>
+    </translation>
+    <translation id="monentoccont2">
+        <english>
+            <ul>
+                <li>English 1</li>
+                <li>English 2</li>
+            </ul>
+        </english>
+		<espanol>
+            <ul>
+                <li>La gran mayoría de sitios web y apps de farmacias se han centrado en el modelo tradicional de venta en línea en el que el máximo valor agregado se limita a las opciones de ubicación y cercanía para la entrega, sin brindar información complementaria y adicional sobre los resultados de medicamentos específicos según lo que la comunidad cuenta, ni tampoco sobre la mejor oferta en precios que pueden encontrar.</li><br></br>
+                <li>En lo relativo al procesamiento de información e incluso a la entrega de información procesada a diversos tipos de usuarios, Farma.social emplea nuevas y mejores tecnologías para el procesamiento y construcción de tableros básicos de indicadores con base en la explotación de datos a gran escala.</li>
+            </ul>
+        </espanol>
+    </translation>
+    
+    <translation id="monentoctitu3">
+        <english>Growing by</english>
+		<espanol>Aumento en</espanol>
+    </translation>
+    <translation id="monentoccont3">
+        <english>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</li>
+                <li>aaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaa aaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaa</li>
+            </ul>
+        </english>
+		<espanol>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</li>
+                <li>aaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaa aaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaa</li>
+            </ul>
+        </espanol>
+    </translation>
+    
+    
+    <translation id="monentoctitu4">
+        <english>Game Over</english>
+		<espanol>Emprendimiento</espanol>
+    </translation>
+    <translation id="monentoccont4">
+        <english>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</li>
+                <li>aaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaa aaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaa</li>
+            </ul>
+        </english>
+		<espanol>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</li>
+                <li>aaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaa aaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaa</li>
+            </ul>
+        </espanol>
+    </translation>
+    
+    
+    <translation id="contactotitu">
+        <english>
+            CONTACT US
+        </english>
+		<espanol>
+            CONTÁCTANOS
+        </espanol>
+    </translation>
+    
+    <translation id="direccion">
+        <english>
+            Carrera 13 A No. 34-72 Oficina 209 - Tel. (+57) 1 7048161 - Bogotá, Colombia ©Grupodot S.A.S
+        </english>
+		<espanol>
+            Carrera 13 A No. 34-72 Oficina 209 - Tel. (+57) 1 7048161 - Bogotá, Colombia ©Grupodot S.A.S
+        </espanol>
+    </translation>
+    
+    
+    
+</translations>

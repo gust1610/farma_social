@@ -1,0 +1,174 @@
+{% extends "layouts/default.html" %}
+{% import 'macros/form.html' as f with context %}
+
+{% block layout_head_title %}
+Registro - FarmaSocial
+{% endblock %}
+
+{% block layout_head %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <script src="http://rawgit.com/Logicify/jquery-locationpicker-plugin/master/locationpicker.jquery.js"></script>
+        
+        <script src="js/mapausuario.js"></script>
+
+<style type="text/css"></style>
+    	<link href='http://fonts.googleapis.com/css?family=Open+Sans'rel='stylesheet' type='text/css'>
+	<link href="/css/estilosmed.css" rel="stylesheet" type="text/css">
+	<link href="/css/estilosmedresponsive.css" rel="stylesheet" type="text/css">
+<style>
+        body{    
+            font-family: 'Open Sans';
+        }
+    .panel-heading{
+        background-image: none !important;
+        background-repeat: no-repeat !important;
+        background-color: #076bb6 !important;
+        border: none !important;
+        color: white !important ;
+        padding: 20px !important;
+        overflow: auto;
+    }
+        .panel{
+            border: none;
+            -webkit-box-shadow:none;
+            box-shadow:none;
+        }
+        #titlepage{
+            font-size: 22px ;
+            width: 100px;
+            margin: 5px auto 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        #logopage{
+            float: left;
+            text-align: center;
+        }
+        .btn-primary,.btn-sm, .btn-xs{
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 0;
+        }
+        .panel-footer{
+            border: none;
+            overflow: auto;
+        }
+        .panel-footer div{
+            float: left;
+        }
+        
+        #botonenviar{
+            margin-right: 20px
+        }
+        #crearcuenta{
+            margin-top: 14px;
+        }
+        @media (max-width: 560px) {
+             #titlepage{
+                width: 100%;
+                float: none;
+                 clear: both;
+                 margin-top: 20px;
+            }
+            #logopage{
+                width: 100%;
+                float: none;
+                text-align: center;
+            }
+            .panel-footer div{
+                float: none;
+            }
+        }
+        .form-group{
+            overflow: auto;
+        }
+        
+    </style>
+{% endblock %}
+    
+{% block layout_content %}
+
+
+
+
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
+<div class="panel panel-default">
+<div class="panel-heading">
+    <div id="logopage"><img alt="Brand" src="images/logo.png" height="34"></div>
+    <div id="titlepage">REGISTRO</div>
+</div>
+<div class="panel-body">
+
+
+
+    
+<form method="POST" action="{{this.uri(_pass_all=True)}}" class="form" enctype="application/x-www-form-urlencoded" role="form">
+
+    {{csrf}}
+
+    <div class='form-group '>
+            <label for="first_name">Nombre(s)</label>
+            
+            <div class='controls'>
+                 <input class=" form-control field-type-text-field  flag_required_true" id="first_name"  placeholder="Nombre(s)" name="first_name" tabindex="0" type="text" value="" required>
+            </div>            
+    </div>
+
+    <div class='form-group '>
+            <label for="last_name">Apellidos</label>
+            
+            <div class='controls'>
+                 <input class=" form-control field-type-text-field  flag_required_true" id="last_name" name="last_name"  placeholder="Apellidos" tabindex="0" type="text" value="" required>
+            </div>           
+    </div>
+    
+    <div class='form-group '>
+            <label for="date_born">Fecha de Nacimiento</label>            
+            <div class='controls'>
+                 <input class=" form-control" id="date_born" name="date_born"  placeholder="Fecha de nacimiento" tabindex="0" type="date" value="" required>
+            </div>           
+    </div>
+
+    <div class='form-group '>
+            <label for="email">Correo Electrónico</label>
+            <div class='controls'>
+                 <input class=" form-control field-type-text-field  flag_required_true" id="email"  placeholder="Correo Electrónico" name="email" tabindex="0" type="email" value="" required>
+            </div>
+    </div>
+    
+
+    <div class='form-group '>
+            <label for="password">Contraseña</label>
+            
+            <div class='controls'>
+                 <input class=" form-control field-type-text-field  flag_required_true" id="password"  placeholder="Contraseña" name="password" tabindex="0" type="password" value="" required>
+            </div> 
+    </div>
+    
+    <div class='form-group ubicacion'>
+            <label for="password">Ubicacion</label>
+            
+            <div class='controls'>
+                    <div id="map-canvas"></div>
+            </div> 
+    </div>
+    <hr>
+    <div class="controls form-actions">
+            <button class="btn btn-primary" type="submit">
+                Submit
+            </button>
+    </div>
+
+</form>
+</div>
+    </div>
+        
+    </div>
+    </div>
+{% endblock %}

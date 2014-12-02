@@ -1,0 +1,308 @@
+@media (max-width: 992px) {
+    .container{
+        width: 100%;
+        padding: 0 30px;
+    }
+    .titlemed{
+        float: none;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    #calificamed{
+        clear: none;
+        float: right;
+    }
+    .medicamento-body, .comment-body{
+        padding: 10px 30px;
+    }
+    .informacion_total{
+        max-width: 100%;
+    }
+
+    .codigo_CUM{
+        text-align: center;
+    }
+    
+    
+    .caracteristicas_medicamento{
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    
+    .nombreusuario {
+        max-width: 100%;
+        float: none;
+        text-align: center;
+    }       
+    
+    
+    #imguser {
+        float: none;
+        max-width: 100%;
+        width: 100%;    
+        text-align: center;
+    }
+    
+    .datamain{
+        max-height: 400px;
+    }
+    #packdatos{
+        margin-top: 20px;
+        width: 100%;
+        max-width: 100%;
+    }
+    #packdatos div{
+        margin: auto ;
+        width: 240px;
+        margin-bottom: 10px;
+    }
+    #map-canvas{
+        max-width:100%; 
+    }
+    
+    .caracteristicas_medrel,.cod_CUM_rel {
+        margin-bottom:20px;
+        width:100%
+    }
+
+    .separadorvertical,.separadorverticalrel {
+        display:none
+    }
+
+    .inforel_left {
+        max-width:100%;
+        margin:0;
+    }
+
+    .cod_CUM_rel {
+        text-align:center;
+        padding:0
+    }
+
+    .titulo_caracteristica {
+        height:auto
+    }
+
+    .topmedrel,.precioheade,.titlemedrel,.datanamerel {
+        float:none;
+        width:100%;
+        max-width:100%;
+        text-align:center
+    }
+
+    .topmedrel {
+        margin:0;
+        padding: 0
+    }
+    .medrel-body{
+        padding: 0
+    }
+    .relacionados,.topmedicamento,.topmedrel,.comentario,.precioheader {
+        width:100%;
+        max-width:100%
+    }
+
+    .precioheader {
+        margin-bottom:20px;
+        border:none;
+        font-size:34px
+    }
+
+    .med-relacionado {
+        width:auto;
+        background:#FFF;
+        padding:20px;
+        margin-bottom: 20px;
+    }
+
+    .contestrella {
+        float:none;
+        width:117px;
+        overflow:auto;
+        margin:0 auto 20px;
+        padding:0
+    }
+
+    .titlemedrel {
+        margin-bottom:20px
+    }
+
+    .caracteristicas_medrel {
+        margin-bottom:20px;
+        width:100%;
+        max-width:100%
+    }
+
+    .row {
+        width:100%;
+        clear:both;
+        margin:0
+    }
+
+    .inforel_right {
+        float:none;
+        overflow:auto;
+        width:100%;
+        max-width:290px;
+        min-height:41px;
+        margin:0 auto
+    }
+
+    .valormedrel {
+        max-width: 100%;
+        font-size:20px;
+        color:#076BB6;
+        text-align: center;
+        float: none;
+        margin: 0;
+    }
+
+    .info_caracteristica2 {
+        font-size:16px;
+        text-align:center;
+        padding:0 10px
+    }
+
+    .text_comentario,.text_comentario:first-child {
+        margin-bottom:20px;
+        width:100%;
+        max-width:92%
+    }
+
+    .info_comment {
+        max-width:90%
+    }
+
+    .topcomment {
+        float:none;
+        width:100%;
+        max-width:100%;
+        margin:0 0 20px
+    }
+
+    .info_caracteristica {
+        font-size:18px
+    }
+
+    .ico_tipo_medicamento{
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .posbuscador {
+        position:relative
+    }
+
+    #Dautocompletar {
+        position:relative;
+        width:94%;
+        display:inline-block;
+        margin-left:19px;
+        left:0;
+        top:0
+    }
+
+    .tt-dropdown-menu {
+        width:100%
+    }
+
+    #contendorfondo {
+        position:relative;
+        margin-left:35px;
+        clear:both;
+        margin-top:20px;
+        left:0;
+        top:0
+    }
+
+    #contendorfondo button {
+        background:#FFF;
+        color:#076BB6;
+        border:solid;
+        width:94%;
+        padding:11px
+    }
+
+    #medicam {
+        width:100%
+    }
+
+    #barbusqueda {
+        height:210px
+    }
+
+    .ico_tipo_medicamento2,.ico_persona {
+        max-width:100%;
+        text-align:center
+    }
+
+    .dataproductmain,.fechacomment {
+        text-align:center
+    }
+    .buscador{
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+    #Dautocompletar{
+        margin: 15px 0 10px;
+    }
+    .navbar>.container .navbar-brand{
+        margin-left: -15px;
+    }
+    .searchleft{
+        float: none;
+        width: 100%;
+    }
+    .separasearch{
+        margin: 0;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media max-width 520px {
+    #medicam {
+        width:88%
+    }
+}
+
+
+@media (min-width: 992px){
+    .navbar {
+        border-radius: 0px;
+    }
+    .navbar-form .form-control{
+        max-width: 160px;
+    }
+    #perfilusuario{
+        margin-left: 15px;
+    }
+}
+@media (max-width: 992px){
+    .container-fluid>.navbar-header{
+        padding: 20px;
+        width: 100%;
+    }
+    #redessocialesline{
+        overflow: auto;
+        margin-bottom: 10px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #05508A;
+    }
+    .navbar-toggle{
+        margin-right: 0;
+    }
+    .container-fluid{
+        padding: 0;
+    }
+}
+@media (max-width: 480px){
+    .navbar-brand img{
+        margin-top: 8px;
+        height: 25px;
+    }
+}

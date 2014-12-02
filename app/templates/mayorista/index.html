@@ -1,0 +1,123 @@
+<!doctype html>
+    <head>
+        <meta charset="utf-8">
+        <title>Farma.social</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="/css/estilosindex.css">  
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
+        <script src="/js/jquery.min.js"></script>
+    	<script type="text/javascript" src="/js/jquery.typeahead.js"></script>
+        
+    </head>
+    <body>
+        <div class="contenedor">
+            <div id="actresponsive">
+            <div class="topmenu">
+                <div class="itemmenu">Acerca</div> 
+                <div class="itemmenu">Informacion</div> 
+                <div class="itemmenu">Blog</div> 
+            </div>
+            <div class="buscador">
+            	<div id="loading">
+            		<img id="img_input" src="/img/loading.gif" width="100"/>
+            	</div>
+                <div class="logofarma">
+                    <img src="/images/logo.png">
+                </div>
+                
+                
+                <div id="barbusqueda">
+                	<div id="contendorfondo">
+                		<a href="#" style="text-decoration:none" onclick="getUrl()">
+                			<img id="img_input" src="/images/buscador.png"/>
+                		</a>
+                	</div>
+                	<div class="posbuscador">
+                		<input id="medicam" class="medicam" type="text" placeholder="BUSCA EL MEDICAMENTO" required disabled="disabled"/>
+                	</div>
+                </div>
+                
+                
+                <div id="tipodatosbusqueda">NOMBRE, PRINCIPIO ACTIVO, LABORATORIO, MARCA O CUM</div>
+            </div>
+            <div class="footer">
+                <div><p id="slogan">El <b>medicamento</b> adecuado, con el <b>precio</b> justo en el <b>lugar</b> correcto.</p></div>
+                <div id="separador"></div>
+                <div class="redessociales">
+                    <div class="itemredes"><img src="/images/facebook_blanco.png"/></div>
+                    <div class="itemredes"><img src="/images/twitter_blanco.png"/></div>
+                    <div class="itemredes"><img src="/images/google_blanco.png"/></div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </body>
+    
+    <script defer="defer" type="text/javascript">
+		var medi = [];
+		var safe = [];
+		    	    	
+		function redirect(url){
+			location.href=url;
+		}
+		
+		function getUrl(){
+			var info = document.getElementById('medicam').value;
+        	
+        	var position = medi.indexOf(info);
+        	if(position != -1) { 
+        		var url = '/mayorista/view_medication/:'+safe[position];
+        		redirect(url);
+        	}
+		}
+		
+		function setSessionStorageData(the_medi, the_safe) {
+			medi.push(the_medi);
+			safe.push(the_safe);
+		}
+		
+		function getData() {
+			if(localStorage.getItem('medi_ls') && localStorage.getItem('safe_ls')){
+				medi = localStorage.getItem('medi_ls').split(',');
+				safe = localStorage.getItem('safe_ls').split(',');
+				autoCompleteInput();
+			} else {
+				var urlData = '';
+				$.ajax({
+					type : 'GET',
+					url : '/api/medications',
+					dataType : 'json',
+					timeout : 20000,
+					success : function(data) {
+						var medic = ''
+						for (i=0; i<data.items.length; i++) {
+							medic = data.items[i].descripcion_atc + ' ' + data.items[i].producto + ' ' +  data.items[i].presentacion_comercial + ' ' + data.items[i].titular + ' ' + data.items[i].cum;
+							url_s = data.items[i].key.urlsafe
+							setSessionStorageData(medic, url_s);
+						}
+						localStorage.setItem('medi_ls', medi);
+						localStorage.setItem('safe_ls', safe);
+						autoCompleteInput();
+					}
+				});
+			}					
+		}
+		
+		getData();
+		
+		function autoCompleteInput() {
+			$(document).ready(function () {
+	            $('input.medicam').typeahead({
+	                name: 'medicamentos',
+	                local: medi,
+	                limit:10,                
+	            });
+	        });
+				    	
+	    	document.getElementById('loading').innerHTML = '';
+			document.getElementById('medicam').disabled = false;
+		}
+	</script>
+    
+</html>

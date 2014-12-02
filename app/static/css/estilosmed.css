@@ -1,0 +1,629 @@
+@charset "utf-8";
+
+html,body {
+    height:100%;
+    background-color:#e9ecf4;
+    font-family:'Open Sans',sans-serif;
+    margin:0
+}
+
+.medicamento-header {
+    overflow:auto;
+    padding:10px 20px
+}
+
+.ico_tipo_medicamento {
+    width:100%;
+    max-width:15%;
+    float:left;
+    text-align:left
+}
+
+.codigo_CUM {
+    text-align:left;
+    font-size:16px;
+    padding:10px 4px 20px
+}
+
+.titulo_caracteristica {
+    font-size:12px;
+    color:#666;
+    text-align:left;
+    height:45px
+}
+
+.informacion_total {
+    float:left;
+    width:100%;
+    max-width:85%
+}
+
+.caracteristicas_medicamento {
+    float:left;
+    width:100%;
+    max-width:21%;
+    margin:0;
+    padding:0 5px
+}
+
+.rowuser {
+    width:100%;
+    overflow:auto;
+    margin:0
+}
+
+.separadorvertical {
+    display:block;
+    width:0;
+    float:left;
+    height:55px;
+    border-left:2px solid #e9ecf4;
+    margin:0 5px
+}
+
+.topmedicamento {
+    width: 100%;
+    max-width:634px;
+    background-color:#fff;
+    float:left;
+    margin-right:26px;
+    margin-bottom: 20px;
+}
+
+.tituloprecio {
+    background-color:#e81d62;
+    text-align:center;
+    font-size:24px;
+    color:#fff;
+    padding:15px 10px
+}
+
+.container{
+    width: 960px;
+    padding: 0;
+}
+
+.contenedorprecio {
+    overflow:auto;
+    background:#fff;
+    color:#076bb6;
+    padding:20px
+}
+
+.titlemed,.nombreusuario {
+    width: 100%;
+    max-width:60%;
+    font-size:26px;
+    color:#076bb6;
+    float:left
+}
+
+.info_caracteristica {
+    font-size:12px
+}
+
+#valormedicamento:Before {
+    content: "$ ";
+    height: 60px;
+    color: #e81d62;
+}
+#valormedicamento{
+    text-align:right;
+    font-size: 24px;
+}
+
+.tasadecambio select {
+    background:transparent;
+    border:1px solid #000
+}
+
+#toes {
+    padding:0
+}
+
+.relacionados,.comentario {
+    width:100%
+}
+
+
+.medrel-header {
+    padding:10px 20px
+}
+
+.lineaseparacion {
+    clear:both;
+    border-bottom:4px solid #e9ecf4;
+    height:0
+}
+
+.medrel-body {
+    clear:both;
+    padding:10px 0 20px 20px
+}
+
+.ico_tipo_medicamento2 img {
+}
+
+.ico_tipo_medicamento2 {
+    width:100%;
+    max-width:10%;
+    float:left;
+    text-align:left;
+    margin:20px 10px 20px 0
+}
+
+.cod_CUM_rel {
+    float:left;
+    text-align:left;
+    font-size:16px;
+    padding:9px 15px 0
+}
+.med-relacionado .starRate{
+    margin-top: 3px;
+}
+
+
+
+.contestrella {
+    font-size:14px;
+    float:right;
+    padding:7px 20px
+}
+
+.estrellas {
+    float:right;
+    padding-left:10px
+}
+
+.usuaestrellas {
+    padding:1px 10px
+}
+
+.inforel_left {
+    float:left;
+    width:100%;
+    max-width:60%;
+    margin-right:4%;
+    margin-top:22px
+}
+
+.inforel_right {
+    float:left;
+    margin-top:25px;
+    width:100%;
+    max-width:23%;
+    min-height:41px
+}
+
+.caracteristicas_medrel {
+    float:left;
+    width:100%;
+    max-width:23%;
+    margin:0
+}
+
+.separadorverticalrel {
+    display:block;
+    width:0;
+    float:left;
+    height:39px;
+    border-left:2px solid #e9ecf4;
+    margin:0 5px
+}
+
+.topmedrel {
+    width:100%;
+    background-color:#fff;
+    float:left;
+    margin-right:26px;
+    padding-bottom:20px;
+    margin-bottom:20px
+}
+
+.precioheader {
+    width:100%;
+    max-width:270px;
+    float:left;
+    border:2px solid #e81d62
+}
+
+.titlemedrel {
+    max-width:40%;
+    font-size:100%;
+    color:#076bb6;
+    float:left;
+    margin-top: 8px;
+    font-size: 18px;
+}
+
+.info_caracteristica2 {
+    font-size:14px;
+    text-align:center;
+}
+
+.dataproductmain {
+    text-align:left;
+    padding:0
+}
+.valormedrel:Before {
+    content: "$ ";
+    height: 60px;
+    color: #e81d62;
+}
+.valormedrel {
+    text-align:right;
+    font-size: 22px;
+    color:#076bb6;
+    margin-top:8px;
+    padding-top:0;
+    float:right;
+    margin-right: 20px;
+}
+
+.datanamerel {
+    overflow:auto;
+    margin-top:20px;
+    margin-bottom:10px!important
+}
+
+.ico_persona {
+    width:100%;
+    max-width:10%;
+    float:left;
+    text-align:center
+}
+
+.fechacomment {
+    float:left;
+    text-align:left;
+    font-size:16px;
+    color:#f0f0f0;
+    padding:15px 15px 0
+}
+
+.info_comment {
+    float:left;
+    width:100%;
+    max-width:85%;
+    margin-right:4%;
+    margin-top:20px;
+    border:1px solid #076bb6
+}
+
+.text_comentario {
+    padding:20px
+}
+
+.row {
+    width:100%;
+    clear:both;
+    margin:0
+}
+
+.topcomment {
+    width:100%;
+    background-color:#fff;
+    float:left;
+    margin-right:26px
+}
+
+.nombre_usuario {
+    max-width:50%;
+    font-size:22px;
+    color:#fff;
+    float:left;
+    padding:10px 20px
+}
+
+.barusuariocomment {
+    background-color:#076bb6
+}
+
+#estrellasmainmed {
+    float:right;
+    width:115px;
+    overflow:hidden
+}
+
+.starRate {
+    position:relative;
+    overflow:hidden;
+    z-index:1;
+    float:right;
+    width:80px;
+    margin:0
+}
+
+.contprecio {
+    width:205px;
+    float:right;
+    font-size:62%;
+    margin-top:5px
+}
+
+#chart {
+    margin:0;
+    padding:0
+}
+
+.relacionadotitu {
+    max-width:100%;
+    background:#fff;
+    font-size:28px;
+    margin-bottom:4px;
+    color:#076bb6;
+    padding:15px 20px
+}
+
+#money {
+    margin-top:20px;
+    width:100%;
+    border:2px solid #909090;
+    color:#076bb6;
+    font-size:15px;
+    padding:10px
+}
+
+.graficosmedicamento {
+    background-color:#fff;
+    margin-bottom:20px;
+    padding:20px
+}
+
+#calificamed {
+    margin-top:11px;
+    float:right;
+    clear:none
+}
+
+#valorcalificamed {
+    float:right;
+    color:#666;
+    margin-left:8px;
+    font-size:12px;
+    padding:0
+}
+
+.tt-dropdown-menu {
+    position:absolute;
+    top:80px;
+    left:0;
+    z-index:100;
+    display:none;
+    right:auto;
+    color:#666;
+    border:3px solid #fff;
+    background:#fff;
+    width:281px;
+    padding:10px 20px
+}
+
+.tt-dataset-medicamentos,.tt-suggestions,.tt-suggestion {
+    background:#fff
+}
+
+#barbusqueda {
+    height:95px;
+    background:#076bb6
+}
+
+.logofarma {
+    float:left;
+    padding:22px 35px
+}
+
+
+#contendorfondo button {
+    background:#fff;
+    color:#076bb6;
+    border:solid;
+    padding:11px
+}
+
+#contendorfondo {
+    position:absolute;
+    top:22px;
+    left:720px
+}
+
+.tt-hint {
+    display:none
+}
+
+.medheader,.med-relacionado,.comment-user {
+    display:block;
+    position:relative;
+    width:100%;
+    font-weight:300
+}
+
+.medicamento-body,.comment-body {
+    clear:both;
+    overflow:auto;
+    padding:10px 0 20px 20px
+}
+
+.medicamento-header h2,.medrel h2 {
+    font-weight:300;
+    margin:0
+}
+
+.medicamento-header img,.medrel img {
+    margin-left:10px
+}
+
+.ico_tipo_medicamento img,.ico_persona img {
+    width:70px;
+    height:70px;
+    margin:20px 10px 20px 0
+}
+
+.bartopfarma{
+    margin:0 auto;
+    padding: 20px 0;
+    position: relative;
+}
+
+.maincontent{
+    margin:50px auto  
+}
+
+
+
+.itemredesnav{
+            float: left;
+            margin-left: 10px;
+            color: white;
+            margin-top: 10px;
+        }
+        .itemredesnav:first-child{
+            margin-left: 0px;
+        }
+        .navbar{
+            background-color: #076bb6;
+        }
+        .navbar-default .navbar-brand,.navbar-default .navbar-nav>li>a{
+            color: white;
+        }
+        .navbar-brand{
+            padding: 4px 15px 4px 0;
+        }
+        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus{
+            color: white;
+            background: #05508A;
+            font-weight: 700;
+        }
+        .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+            color: white;
+            font-weight: 700;
+            background-color: #05508A;
+        }
+        .form-group input{
+            border: none;
+            padding: 0 10px;
+            color: #076bb6;
+            
+        }
+        
+        
+
+        .navbar-default {
+            border:none;
+        }
+        .navbar-default .navbar-collapse, .navbar-default .navbar-form{
+            border-color:#05508A;
+        }
+        .navbar-collapse,.navbar-form {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            padding-bottom: 20px;
+        }
+        .container-fluid>.navbar-header{
+            padding: 0px;
+        }
+        
+        #contredesnav{
+            margin: 0 auto;
+            width: 113px;
+        }
+
+.navbar>.container .navbar-brand{
+    margin: 0;
+}
+#medicam{
+    background-color: white;
+}
+.buscador{
+    position: absolute;
+    top: 27px;
+    left: 440px;
+}
+#Dautocompletar{
+    margin-right: 10px;
+}
+
+.form-control{
+    border-radius:0;
+}
+.btn{
+    border-radius:0;
+}
+
+.searchleft{
+    float: left;
+}
+.separasearch{
+    margin-right: 10px;
+}
+
+.datamain{
+            float: left;
+            background-color: white;
+        }
+        #map-canvas{
+            width:100%; 
+            max-width: 290px; 
+            height: 192px;
+            float: left;
+        }
+        #imguser{
+            border-radius: 100%;
+            overflow: hidden;
+        }
+        .datamain{
+            width: 100%;
+            max-width: 670px;
+            height: 100%;
+            max-height: 192px;
+            padding: 20px;
+        }
+        .btn_edit{
+            float: right;
+            padding: 3px 30px;
+            background: none;
+            border: 1px solid #e81d62;
+            font-size: 12px;
+            color: #e81d62;
+            font-weight: 700;
+
+        }
+        .datamain .row{
+            margin-bottom: 10px;
+        }
+        #imguser{
+            float: left;
+        }
+        #packdatos{
+            float: left;
+            padding: 10px;
+            color: #666;
+        }
+        #packdatos div{
+            margin:0 0 10px 10px;
+        }
+        #fechanacimiento{
+            background-image: url(images/birth.png);
+        }
+        #correoelectronico{
+            background-image: url(images/correo.png);
+        }
+        #perfilsocial{
+            background-image: url(images/faceperfil.png);
+        }
+        #perfilusuariodrop{
+            margin-left: 10px;
+        }
+        .datologo{ 
+            background-repeat: no-repeat;
+            background-position: center;
+            padding-left: 30px;
+            width: 18px;
+            margin-right: 10px;
+        }
+        .navbar-collapse.in{
+            overflow-y: visible;
+        }
+        .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus{
+            background-color: #05508A;
+            color: white;
+        }

@@ -1,0 +1,180 @@
+.clearfix:after {
+	content: " ";
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both
+}
+
+.chart-horiz .chart {
+	padding:0;
+	margin:0;
+	width: 80%;
+}
+
+.chart-horiz .chart li {
+	display: block;
+	height: 65px;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.chart-horiz .chart li:before {
+	color: #fff;
+	content: attr(title);
+	left: 5px;
+	position: absolute;
+	top: 10px;
+}
+
+.chart-horiz .chart li.title:before {
+	color: black;
+	font-weight: bold;
+	left: 0
+}
+
+.chart-horiz .chart li:first-child {
+	margin-top: 0
+}
+
+.chart-horiz .chart li .bar {
+	background: black;
+	height: 100%
+}
+
+.chart-horiz .chart li .number {
+	font-size: 18px;
+	padding-left: 5px;
+	position: absolute;
+	top: 10px;
+	margin: 22px 0px;
+}
+
+/* Mis estilos */
+
+.chart-horiz .chart li.past0 .bar { background: #a7dcff; height: 100% }
+.chart-horiz .chart li.past0 .number { color: #fff }
+
+.chart-horiz .chart li.past1 .bar { background: #8ad3ff; height: 100% }
+.chart-horiz .chart li.past1 .number { color: #fff }
+
+.chart-horiz .chart li.past2 .bar { background: #72cdff; height: 100% }
+.chart-horiz .chart li.past2 .number { color: #fff }
+
+.chart-horiz .chart li.past3 .bar { background: #4dc2ff; height: 100% }
+.chart-horiz .chart li.past3 .number { color: #fff }
+
+.chart-horiz .chart li.past4 .bar { background: #46b5ef; height: 100% }
+.chart-horiz .chart li.past4 .number { color: #fff }
+
+.chart-horiz .chart li.past5 .bar {	background: #42aae1; height: 100% }
+.chart-horiz .chart li.past5 .number { color: #fff }
+
+.chart-horiz .chart li.past6 .bar {	background: #0d92d1; height: 100% }
+.chart-horiz .chart li.past6 .number { color: #fff }
+
+.chart-horiz .chart li.past7 .bar {	background: #097bb0; height: 100% }
+.chart-horiz .chart li.past7 .number { color: #fff }
+
+.chart-horiz .chart li.past8 .bar {	background: #216790; height: 100% }
+.chart-horiz .chart li.past8 .number { color: #fff }
+
+.chart-horiz .chart li.past9 .bar {	background: #185476; height: 100% }
+.chart-horiz .chart li.past9 .number { color: #fff }
+
+.chart-horiz .chart li.past10 .bar { background: #124561; height: 100% }
+.chart-horiz .chart li.past10 .number { color: #fff }
+
+.chart-horiz .chart li.past11 .bar { background: #185476; height: 100% }
+.chart-horiz .chart li.past11 .number { color: #fff}
+
+.chart-horiz .chart li.past12 .bar { background: #216790; height: 100% }
+.chart-horiz .chart li.past12 .number { color: #fff }
+
+.chart-horiz .chart li.past13 .bar { background: #097bb0; height: 100% }
+.chart-horiz .chart li.past13 .number { color: #fff }
+
+.chart-horiz .chart li.past14 .bar { background: #0d92d1; height: 100% }
+.chart-horiz .chart li.past14 .number { color: #fff }
+
+.chart-horiz .chart li.past15 .bar {	background: #42aae1; height: 100% }
+.chart-horiz .chart li.past15 .number { color: #fff}
+
+.chart-horiz .chart li.past16 .bar {	background: #46b5ef; height: 100% }
+.chart-horiz .chart li.past16 .number { color: #fff }
+
+.chart-horiz .chart li.past17 .bar {	background: #4dc2ff; height: 100% }
+.chart-horiz .chart li.past17 .number { color: #fff }
+
+.chart-horiz .chart li.past18 .bar {	background: #72cdff; height: 100% }
+.chart-horiz .chart li.past18 .number { color: #fff }
+
+.chart-horiz .chart li.past19 .bar {	background: #8ad3ff; height: 100% }
+.chart-horiz .chart li.past19 .number { color: #fff }
+
+
+@media screen and (max-width: 480px) {
+	.chart-horiz .chart li {
+		height: auto
+	}
+	.chart-horiz .chart li:before {
+		color: black;
+		display: block;
+		left: 0;
+		position: relative
+	}
+	.chart-horiz .chart li.title:before {
+		border-bottom: 1px solid
+	}
+	.chart-horiz .chart li .bar {
+		height: 23px
+	}
+	.chart-horiz .chart li .number {
+		display: block;
+		left: 0 !important;
+		padding-left: 0;
+		position: relative;
+		top: -8px
+	}
+.chart-horiz .chart li.past0 .number { color: #a7dcff; }
+
+.chart-horiz .chart li.past1 .number { color: #8ad3ff; }
+
+.chart-horiz .chart li.past2 .number { color: #72cdff }
+
+.chart-horiz .chart li.past3 .number { color: #4dc2ff }
+
+.chart-horiz .chart li.past4 .number { color: #46b5ef }
+
+.chart-horiz .chart li.past5 .number { color: #42aae1 }
+
+.chart-horiz .chart li.past6 .number { color: #0d92d1 }
+
+.chart-horiz .chart li.past7 .number { color: #097bb0 }
+
+.chart-horiz .chart li.past8 .number { color: #216790 }
+
+.chart-horiz .chart li.past9 .number { color: #185476 }
+
+.chart-horiz .chart li.past10 .number { color: #124561 }
+
+.chart-horiz .chart li.past11 .number { color: #185476}
+
+.chart-horiz .chart li.past12 .number { color: #216790 }
+
+.chart-horiz .chart li.past13 .number { color: #097bb0 }
+
+.chart-horiz .chart li.past14 .number { color: #0d92d1 }
+
+.chart-horiz .chart li.past15 .number { color: #42aae1}
+
+.chart-horiz .chart li.past16 .number { color: #46b5ef }
+
+.chart-horiz .chart li.past17 .number { color: #4dc2ff }
+
+.chart-horiz .chart li.past18 .number { color: #72cdff }
+
+.chart-horiz .chart li.past19 .number { color: #8ad3ff }
+
+
+}

@@ -1,0 +1,16 @@
+You were successfully registered. Please check your email to activate your account
+
+<input action="action" type="button" value="Continuar" onclick="continuar_my_urlsafe()" />
+    
+
+<script type="text/javascript">
+	function continuar_my_urlsafe() {		
+		var my_urlsafe = localStorage.getItem('my_urlsafe');
+		if(my_urlsafe != '' && my_urlsafe != null) {
+			location.href=my_urlsafe;
+		} else {
+			location.href = '/mayorista';
+		}		
+	}
+
+</script>

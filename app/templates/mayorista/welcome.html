@@ -1,0 +1,28 @@
+Welcome 
+
+{% if ferris.format_value(this.user) != "None" %}
+	Welcome {{ferris.format_value(this.user.full_name)}} - {{ferris.format_value(this.user.email)}}
+    {% if user_provider_login == 'facebook' %}    	
+    	<img alt="user_img" src="http://graph.facebook.com/{{user_id_login}}/picture?type=square">
+    	<input action="action" type="button" value="Regresar al Medicamento" onclick="continuar_my_urlsafe()" />
+    {% elif  user_provider_login == 'google'%}
+    	<img alt="user_img" src="https://profiles.google.com/s2/photos/profile/{{user_id_login}}">
+    	<input action="action" type="button" value="Regresar al Medicamento" onclick="continuar_my_urlsafe()" />
+    {% elif  user_provider_login == 'twitter'%}
+    	<img alt="user_img" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png">
+    	<input action="action" type="button" value="Regresar al Medicamento" onclick="continuar_my_urlsafe()" />
+    {% endif %}
+{% endif %}
+
+<script type="text/javascript">
+	
+	function continuar_my_urlsafe() {		
+		var my_urlsafe = localStorage.getItem('my_urlsafe');
+		if(my_urlsafe != '' && my_urlsafe != null) {
+			location.href=my_urlsafe;
+		} else {
+			location.href = '/mayorista';
+		}
+	}
+
+</script>

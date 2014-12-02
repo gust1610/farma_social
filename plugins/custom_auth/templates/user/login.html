@@ -1,0 +1,149 @@
+{% extends "layouts/default.html" %}
+{% import 'macros/new_form.html' as f with context %}
+
+{% block layout_head_title %}Login - {{ferris.settings.get('app_name')}}{% endblock %}
+
+{% block layout_head %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Login - FarmaSocial</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="/ferris/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/ferris/css/bootstrap-theme.min.css">
+
+    <!-- Initial Scripts -->
+    <!-- <script src="./Login - FarmaSocial_files/jsapi"></script> -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    
+    <!-- <script type="text/javascript" src="./Login - FarmaSocial_files/bootstrap.js"></script> -->
+
+  	<link href='http://fonts.googleapis.com/css?family=Open+Sans'rel='stylesheet' type='text/css'>
+    	
+<style>
+        body{
+            font-family: 'Open Sans';
+        }
+    .panel-heading{
+        background-image: none !important;
+        background-repeat: no-repeat !important;
+        background-color: #076bb6 !important;
+        border: none !important;
+        color: white !important ;
+        padding: 20px !important;
+        overflow: auto;
+    }
+        .panel{
+            border: none;
+            -webkit-box-shadow:none;
+            box-shadow:none;
+        }
+        #titlepage{
+            font-size: 22px ;
+            width: 100px;
+            margin: 5px auto 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        #logopage{
+            float: left;
+            text-align: center;
+        }
+        .btn-primary,.btn-sm, .btn-xs{
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 0;
+        }
+        .panel-footer{
+            border: none;
+            overflow: auto;
+        }
+        .panel-footer div{
+            float: left;
+        }
+        
+        #botonenviar{
+            margin-right: 20px
+        }
+        #crearcuenta{
+            margin-top: 14px;
+        }
+        @media (max-width: 560px) {
+             #titlepage{
+                width: 100%;
+                float: none;
+                 clear: both;
+                 margin-top: 20px;
+            }
+            #logopage{
+                width: 100%;
+                float: none;
+                text-align: center;
+            }
+            .panel-footer div{
+                float: none;
+            }
+        }
+
+    </style>
+{% endblock %}
+
+{% block layout_content %}
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
+<div class="panel panel-default">
+<div class="panel-heading">
+    <div id="logopage"><img alt="Brand" src="images/logo.png" height="34"></div>
+    <div id="titlepage">INGRESO</div>
+</div>
+<div class="panel-body">
+
+{% if ferris.settings.get('enable_federated_login') %}
+<div class="row">
+    <div class="col-md-4 col-xs-6 form-group">
+        <a href="{{uri('user:social_login', provider_name='facebook')}}" class="btn btn-block btn-sm btn-primary">Facebook</a>
+    </div>
+    <div class="col-md-4 col-xs-6 form-group">
+        <a href="{{uri('user:social_login', provider_name='twitter')}}" class="btn btn-block btn-sm btn-info">Twitter</a>
+    </div>
+    <div class="col-md-4 col-xs-6 form-group">
+        <a href="{{uri('user:social_login', provider_name='google')}}" class="btn btn-block btn-sm btn-danger">Google</a>
+    </div>
+    <!-- <div class="col-md-4 col-xs-6 form-group">
+        <a href="{{uri('user:social_login', provider_name='linkedin')}}" class="btn btn-block btn-sm btn-default">LinkedIn</a>
+    </div>
+    <div class="col-md-4 col-xs-6 form-group">
+        <a href="{{uri('user:social_login', provider_name='github')}}" class="btn btn-block btn-sm btn-default">GitHub</a>
+    </div>
+    <div class="col-md-4 col-xs-6 form-group">
+        <a href="{{uri('user:social_login', provider_name='yahoo')}}" class="btn btn-block btn-sm btn-default">Yahoo</a>
+    </div> -->
+</div>
+<h3 class="text-center">O</h3>
+{% endif %}
+
+<form method="POST" action="{{this.uri(_pass_all=True)}}" class="form-horizontal" enctype="application/x-www-form-urlencoded" role="form">
+
+  {{csrf}}
+
+  {{ f.form_field(form, form['email'], horizontal=True,  placeholder="Email") }}
+  {{ f.form_field(form, form['password'], horizontal=True,  placeholder='Password') }}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="remember"> Recordar este equipo
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="panel-footer"><button type="submit" class="btn btn-primary btn-lg">Ingresar</button> <span class="text-muted">No tiene una cuenta? <a href="{{uri('user:register')}}">Registrarse!</a></span></div>
+</div>
+</form>
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>FarmaSocial</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="/css/bootstrap.min2.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="/css/styles.css" rel="stylesheet">
+		
+		<!-- Load jQuery and the typeahead JS files -->
+  		<script src="/js/jquery.min.js"></script>
+    	<script type="text/javascript" src="/js/jquery.typeahead.js"></script>
+    	<link href="/css/examples.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+<div class="container-full" style="height: 1024px">
+	<div class="row">       
+    	<div class="col-lg-12 text-center v-center">
+        	<h1>FarmaSocial</h1>
+          	<p class="lead">Encuentra el medicamento</p>
+          
+          	<br><br>
+          	<div class="searchMedication">
+	          	<form>
+	          		<input id="medicam" class="medicam" type="text" placeholder="Nombre del Medicamento..." required />
+	          		<br><br>
+	          		<button class="btn btn-lg btn-primary" type="button" onclick="getUrl()">Buscar</button>
+	          	</form>
+          	</div>
+          	
+          	<div class="setDenunciation" hidden style="width: 30%; margin: 0 auto;">
+				<form method="POST" action="/mayorista/denunciations" novalidate>
+					<div class="list-group">
+						<div class="controls" id="med">
+							<select class=" form-control field-type-key-property-field" id="medication" name="medication" tabindex="0" onchange="denunciar();">
+								<option selected="" value="Seleccione el Medicamento">Seleccione el Medicamento</option>
+								
+							</select>
+						</div>
+					</div>
+					<div class="list-group">
+						<div class="controls" id="pha">
+							<select class=" form-control field-type-key-property-field" id="pharmacy" name="pharmacy" tabindex="0" onchange="denunciar();">
+								<option selected="" value="Seleccione el Lugar">Seleccione el Lugar</option>
+								{% for pharmacy in pharmacies %}
+									<option value="{{pharmacy.address}}">{{pharmacy}} <h5>{{pharmacy.address}}</h5></option>
+								{% endfor %}
+							</select>
+							<br>
+							<div>
+								<input type="number" class="form-control field-type-key-property-field" id="cost" required data-validation-required-message="Por favor ingrese el Costo." placeholder="Costo del Medicamento" style="width: 100%;">
+							</div>
+						</div>
+					</div>
+					<!-- /.list-group -->
+					<div class="controls" id="denunciar">
+						<button type="submit" id="b_si" class="btn btn-default btn-block" onclick="sendPOST()">Denunciar</button>
+					</div>
+				</form>
+			</div> 
+          	<div>
+          		<label id="label">Realizar Denuncia</label>
+		  		<input type="checkbox" id="check" onclick="cambiar();">
+		  	</div>          
+        </div>
+          
+	</div> 
+	<!-- /row -->
+  	
+  	<div class="row">
+    	<div class="col-lg-12 text-center v-center" style="font-size:39pt;">
+			<a href="{{ferris.users.create_login_url('/admin')}}"><i class="icon-google-plus"></i></a>
+			<a href="#"><i class="icon-facebook"></i></a>
+			<a href="#"><i class="icon-twitter"></i></a>
+		</div>
+	</div>
+  
+  	<br><br><br><br><br>
+
+</div> <!-- /container full -->
+
+
+
+
+	<!-- script references -->
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script> -->
+	</body>
+	
+	<script defer="defer" type="text/javascript">
+		var medi = [];
+		var safe = [];
+		var select = document.getElementById("medication");
+		{% set count = 0 %}
+		{% for medication in medications %}
+    		medi[{{count}}] = "{{medication.descripcion_atc}} {{medication.presentacion_comercial}} {{medication.cum}}";
+    		safe[{{count}}] = "{{medication.key.urlsafe()}}";
+    		
+    		$("#medication").append("<option value='{{medication.descripcion_atc}}|{{medication.presentacion_comercial}}'>{{medication.descripcion_atc}} - {{medication.presentacion_comercial}}</option>");
+    		{% set count = count+1 %}
+    	{% endfor %}
+		
+    	    	
+		function redirect(url){
+			location.href=url;
+		}
+		
+		function getUrl(){
+			var info = document.getElementById('medicam').value;
+        	
+        	var position = medi.indexOf(info);
+        	if(position != -1) { 
+        		var url = "/mayorista/view_medication/:"+safe[position];
+        		redirect(url);
+        	}
+		}
+		
+		function cambiar() {
+	 		var checkboxvar = document.getElementById('check');
+	 		var lis = document.getElementsByClassName('searchMedication');
+			var bot = document.getElementsByClassName('setDenunciation');
+			 	
+	 		if (!checkboxvar.checked) { 
+	 			for (var i = 0; i < lis.length; i++) {
+	 				lis[i].style.display ="block";
+	 			}
+	 			for (var i = 0; i < bot.length; i++) {
+	 				bot[i].style.display ="none";
+	 			}
+	 		}
+	 		else {
+	 			
+	 			
+	 			for (var i = 0; i < lis.length; i++) {
+	 				lis[i].style.display ="none";
+	 			}
+	 			for (var i = 0; i < bot.length; i++) {
+	 				bot[i].style.display ="block";
+	 			}
+	 		}
+	 	}
+		
+		function sendPOST(){
+			var med = document.getElementById('medication').value;
+			var pha = document.getElementById('pharmacy').value;
+			var cos = document.getElementById('cost').value;
+			$.ajax({
+			       type: "POST",
+			       url: "/denunciations/add_denunciation",
+			       data: ("&user=" + "usuario@"
+			    		  +"&medication=" + med
+			    		  +"&pharmacy=" + pha
+			    		  +"&cost=" + cos),
+			       success: function() {
+			    	   console.log( $( this ).serialize());
+			       }
+			    });
+		}
+		
+		function denunciar(){
+			var med = document.getElementById('medication').value;
+			var pha = document.getElementById('pharmacy').value;
+			if(med=='Seleccione el Medicamento'){
+				document.getElementById('pha').style.display = 'none';
+				document.getElementById('denunciar').style.display = 'none';
+			} else {
+				document.getElementById('pha').style.display = 'block';
+			}
+			
+			if(pha=='Seleccione el Lugar'){
+				document.getElementById('denunciar').style.display = 'none';
+			} else {
+				document.getElementById('denunciar').style.display = 'block';
+			}
+		}
+		denunciar();
+		
+		$(document).ready(function () {
+            $('input.medicam').typeahead({
+                name: 'medicamentos',
+                local: medi,
+                limit:10
+            });
+        });
+	</script>
+	
+</html>
